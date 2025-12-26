@@ -75,7 +75,10 @@ const Portfolio = () => {
           <div className="header-content">
             {portfolio.profileImage && (
               <img
-                src={`${process.env.REACT_APP_API_URL}${portfolio.profileImage}`}
+                src={portfolio.profileImage.startsWith("http")
+                  ? portfolio.profileImage
+                  : `${process.env.REACT_APP_API_URL}${portfolio.profileImage}`
+                }
                 alt={portfolio.name}
                 className="profile-image"
               />
