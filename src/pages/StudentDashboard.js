@@ -6,6 +6,13 @@ import './StudentDashboard.css';
 const StudentDashboard = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
   // Form state
   const [formData, setFormData] = useState({
     name: '',
