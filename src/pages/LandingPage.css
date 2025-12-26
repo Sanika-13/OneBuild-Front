@@ -82,6 +82,7 @@
 
 .nav-links a:hover {
     color: #f0f0f0;
+    transform: scale(1.1);
 }
 
 .nav-links a::after {
