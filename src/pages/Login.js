@@ -16,14 +16,37 @@ const Login = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // TODO: Add login logic here
-        console.log('Login:', formData);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.name, // Using 'name' but backend checks name or email
+                    password: formData.password
+                }),
+            });
 
-        // For now, redirect to dashboard
-        navigate('/dashboard');
+            const data = await response.json();
+
+            if (response.ok) {
+                // Store token and user data
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                // Redirect to dashboard
+                navigate('/dashboard');
+            } else {
+                alert(data.error || 'Invalid credentials');
+            }
+        } catch (error) {
+            console.error('Login Error:', error);
+            alert('Something went wrong. Please try again.');
+        }
     };
 
     return (

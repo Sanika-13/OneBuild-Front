@@ -19,7 +19,7 @@ const Register = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
@@ -27,11 +27,31 @@ const Register = () => {
             return;
         }
 
-        // TODO: Add registration logic here
-        console.log('Register:', formData);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password
+                }),
+            });
 
-        // Show success popup
-        setShowSuccess(true);
+            const data = await response.json();
+
+            if (response.ok) {
+                // Show success popup
+                setShowSuccess(true);
+            } else {
+                alert(data.error || 'Registration failed');
+            }
+        } catch (error) {
+            console.error('Registration Error:', error);
+            alert('Something went wrong. Please try again.');
+        }
     };
 
     const handleGoToDashboard = () => {
