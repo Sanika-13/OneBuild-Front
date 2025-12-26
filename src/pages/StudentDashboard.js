@@ -445,6 +445,27 @@ const StudentDashboard = () => {
               {portfolioUrl}
             </a>
           </p>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(portfolioUrl);
+              alert('Link copied to clipboard! 📋');
+            }}
+            style={{
+              marginTop: '15px',
+              padding: '8px 16px',
+              background: '#28a745',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              display: 'block',
+              margin: '15px auto 0'
+            }}
+          >
+            📋 Copy Link
+          </button>
         </div>
       );
     } catch (error) {
