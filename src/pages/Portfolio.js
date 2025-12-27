@@ -205,7 +205,7 @@ const Portfolio = () => {
                     onClick={() => scrollProjects('left')}
                     style={{
                       position: 'absolute',
-                      left: '-45px',
+                      left: '-55px',
                       zIndex: 20,
                       background: 'rgba(0,0,0,0.6)',
                       color: 'white',
@@ -245,7 +245,9 @@ const Portfolio = () => {
                         margin: 0
                       }}>
                         {project.image && (
-                          <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px' }} />
+                          <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                            <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
+                          </a>
                         )}
                         <h3 className="project-name">{project.name}</h3>
                         <p className="project-description">{project.description}</p>
@@ -277,7 +279,7 @@ const Portfolio = () => {
                     onClick={() => scrollProjects('right')}
                     style={{
                       position: 'absolute',
-                      right: '-45px',
+                      right: '-55px',
                       zIndex: 20,
                       background: 'rgba(0,0,0,0.6)',
                       color: 'white',
