@@ -402,17 +402,21 @@
 
 /* Achievements Section */
 .achievements-grid {
-  display: grid;
+  /* display: grid;  Removed to allow flex carousel */
   gap: 20px;
 }
 
 .achievement-card {
   display: flex;
+  flex-direction: column;
+  /* Stack items vertically */
   align-items: center;
-  gap: 20px;
+  /* Center items */
+  gap: 15px;
   padding: 25px;
   border-radius: 15px;
   transition: all 0.3s ease;
+  text-align: center;
 }
 
 .achievement-card:hover {

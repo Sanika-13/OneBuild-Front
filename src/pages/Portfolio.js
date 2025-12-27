@@ -7,12 +7,25 @@ const Portfolio = () => {
   const { uniqueUrl } = useParams();
   const [portfolio, setPortfolio] = useState(null);
   const [loading, setLoading] = useState(true);
-  const projectsRef = React.useRef(null);
+  const projectsRef = useRef(null);
+  const achievementsRef = useRef(null);
 
   const scrollProjects = (direction) => {
     if (projectsRef.current) {
       const { current } = projectsRef;
       const scrollAmount = current.offsetWidth; // Scroll by full width
+      if (direction === 'left') {
+        current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const scrollAchievements = (direction) => {
+    if (achievementsRef.current) {
+      const { current } = achievementsRef;
+      const scrollAmount = current.offsetWidth;
       if (direction === 'left') {
         current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       } else {
@@ -325,20 +338,97 @@ const Portfolio = () => {
         {portfolio.achievements &&
           portfolio.achievements.length > 0 &&
           (portfolio.achievements[0].title || typeof portfolio.achievements[0] === 'string') && (
-            <section className="section achievements-section">
-              <h2 className="section-title">🏆 Achievements</h2>
-              <div className="achievements-grid">
-                {portfolio.achievements.map((achievement, index) => (
-                  <div key={index} className="achievement-card">
-                    <span className="achievement-icon">🏆</span>
-                    {typeof achievement !== 'string' && achievement.image && (
-                      <a href={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
-                        <img src={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px', cursor: 'pointer' }} />
-                      </a>
-                    )}
-                    <p className="achievement-text">{typeof achievement === 'string' ? achievement : achievement.title}</p>
+            <section className="section achievements-section" style={{
+              width: '100vw',
+              position: 'relative',
+              left: '50%',
+              right: '50%',
+              marginLeft: '-50vw',
+              marginRight: '-50vw',
+              padding: '0 5%'
+            }}>
+              <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+                <h2 className="section-title" style={{ paddingLeft: '20px' }}>🏆 Achievements</h2>
+                <div className="achievements-carousel-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                  <button
+                    className="carousel-btn left-btn"
+                    onClick={() => scrollAchievements('left')}
+                    style={{
+                      position: 'absolute',
+                      left: '-55px',
+                      zIndex: 20,
+                      background: 'rgba(0,0,0,0.6)',
+                      color: 'white',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '50%',
+                      width: '50px',
+                      height: '50px',
+                      cursor: 'pointer',
+                      fontSize: '1.5rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s'
+                    }}
+                  >
+                    &#8249;
+                  </button>
+
+                  <div className="achievements-grid" ref={achievementsRef} style={{
+                    display: 'flex',
+                    overflowX: 'auto',
+                    scrollBehavior: 'smooth',
+                    scrollSnapType: 'x mandatory',
+                    gap: '20px',
+                    padding: '20px 0',
+                    width: '100%',
+                    scrollbarWidth: 'none',
+                    borderRadius: '15px'
+                  }}>
+                    {portfolio.achievements.map((achievement, index) => (
+                      <div key={index} className="achievement-card" style={{
+                        minWidth: 'calc(33.333% - 14px)',
+                        flex: '0 0 calc(33.333% - 14px)',
+                        scrollSnapAlign: 'start',
+                        boxSizing: 'border-box',
+                        padding: '20px',
+                        margin: 0
+                      }}>
+                        <span className="achievement-icon">🏆</span>
+                        {typeof achievement !== 'string' && achievement.image && (
+                          <a href={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                            <img src={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
+                          </a>
+                        )}
+                        <p className="achievement-text">{typeof achievement === 'string' ? achievement : achievement.title}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+
+                  <button
+                    className="carousel-btn right-btn"
+                    onClick={() => scrollAchievements('right')}
+                    style={{
+                      position: 'absolute',
+                      right: '-55px',
+                      zIndex: 20,
+                      background: 'rgba(0,0,0,0.6)',
+                      color: 'white',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '50%',
+                      width: '50px',
+                      height: '50px',
+                      cursor: 'pointer',
+                      fontSize: '1.5rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s'
+                    }}
+                  >
+                    &#8250;
+                  </button>
+                </div>
               </div>
             </section>
           )}
