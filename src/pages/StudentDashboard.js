@@ -30,7 +30,14 @@ const StudentDashboard = () => {
       linkedin: '',
       instagram: ''
     },
-    theme: 'dark'
+    theme: 'dark',
+    resume: null,
+    stats: {
+      yearsOfExperience: '',
+      projectsCompleted: '',
+      internshipsCompleted: '',
+      totalSkills: ''
+    }
   });
 
   const [profileImagePreview, setProfileImagePreview] = useState(null);
@@ -39,6 +46,89 @@ const StudentDashboard = () => {
   const [showSkillsDropdown, setShowSkillsDropdown] = useState(false);
 
   // Skills options
+  // Generic File Upload Handler
+  const handleFileUpload = async (file) => {
+    const formDataImg = new FormData();
+    formDataImg.append('image', file);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/resume/upload-image`, formDataImg, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      return response.data.path;
+    } catch (error) {
+      console.error('Upload failed:', error);
+      return null;
+    }
+  };
+
+  // Handle Resume Upload
+  const handleResumeUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLoading(true);
+    const path = await handleFileUpload(file);
+    if (path) {
+      setFormData(prev => ({ ...prev, resume: path }));
+      setMessage('✅ Resume uploaded successfully!');
+    } else {
+      setMessage('❌ Resume upload failed');
+    }
+    setLoading(false);
+  };
+
+  // Handle Project Image Upload
+  const handleProjectImageUpload = async (index, e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLoading(true);
+    const path = await handleFileUpload(file);
+    if (path) {
+      handleProjectChange(index, 'image', path);
+      setMessage('✅ Project image uploaded!');
+    }
+    setLoading(false);
+  };
+
+  // Handle Achievement Image Upload
+  const handleAchievementImageUpload = async (index, e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLoading(true);
+    const path = await handleFileUpload(file);
+    if (path) {
+      const updatedAchievements = [...formData.achievements];
+      if (typeof updatedAchievements[index] === 'string') {
+        updatedAchievements[index] = { title: updatedAchievements[index], image: path };
+      } else {
+        updatedAchievements[index].image = path;
+      }
+      setFormData(prev => ({ ...prev, achievements: updatedAchievements }));
+      setMessage('✅ Achievement image uploaded!');
+    }
+    setLoading(false);
+  };
+
+  // Handle Stats Change
+  const handleStatsChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      stats: { ...prev.stats, [name]: value }
+    }));
+  };
+
+  // Handle achievement title change (for object structure)
+  const handleAchievementTitleChange = (index, value) => {
+    setFormData(prev => ({
+      ...prev,
+      achievements: prev.achievements.map((ach, i) => {
+        if (i !== index) return ach;
+        if (typeof ach === 'string') return { title: value, image: '' };
+        return { ...ach, title: value };
+      })
+    }));
+  };
+
   // Skills options (100+ skills)
   const skillsOptions = [
     // Frontend
@@ -637,6 +727,11 @@ const StudentDashboard = () => {
                 value={project.link}
                 onChange={(e) => handleProjectChange(index, 'link', e.target.value)}
               />
+              <div className="upload-btn-wrapper">
+                <label>Project Image:</label>
+                <input type="file" accept="image/*" onChange={(e) => handleProjectImageUpload(index, e)} />
+                {project.image && <small>✅ Image Uploaded</small>}
+              </div>
               {index > 0 && (
                 <button type="button" onClick={() => removeProject(index)} className="remove-btn">
                   Remove
@@ -656,10 +751,14 @@ const StudentDashboard = () => {
             <div key={index} className="dynamic-item">
               <input
                 type="text"
-                placeholder="Achievement"
-                value={achievement}
-                onChange={(e) => handleAchievementChange(index, e.target.value)}
+                placeholder="Achievement Title"
+                value={typeof achievement === 'string' ? achievement : achievement.title}
+                onChange={(e) => handleAchievementTitleChange(index, e.target.value)}
               />
+              <div className="upload-btn-wrapper">
+                <input type="file" accept="image/*" onChange={(e) => handleAchievementImageUpload(index, e)} />
+                {(typeof achievement !== 'string' && achievement.image) && <small>✅ Image Uploaded</small>}
+              </div>
               {index > 0 && (
                 <button type="button" onClick={() => removeAchievement(index)} className="remove-btn">
                   Remove

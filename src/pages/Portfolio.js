@@ -106,9 +106,46 @@ const Portfolio = () => {
                   {portfolio.socialLinks.email}
                 </p>
               )}
+              {portfolio.resume && (
+                <a href={portfolio.resume.startsWith('http') ? portfolio.resume : `${process.env.REACT_APP_API_URL}${portfolio.resume}`} target="_blank" rel="noopener noreferrer" className="resume-btn" style={{
+                  marginTop: '15px', display: 'inline-block', padding: '8px 16px', background: '#fff', color: '#000', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold'
+                }}>
+                  Download Resume 📄
+                </a>
+              )}
             </div>
           </div>
         </header>
+
+        {/* Stats Section */}
+        {portfolio.stats && (
+          <section className="section stats-section" style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', padding: '20px 0' }}>
+            {portfolio.stats.yearsOfExperience && (
+              <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.yearsOfExperience}</h3>
+                <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Years Exp</p>
+              </div>
+            )}
+            {portfolio.stats.projectsCompleted && (
+              <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.projectsCompleted}</h3>
+                <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Projects</p>
+              </div>
+            )}
+            {portfolio.stats.internshipsCompleted && (
+              <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.internshipsCompleted}</h3>
+                <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Internships</p>
+              </div>
+            )}
+            {portfolio.stats.totalSkills && (
+              <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.totalSkills}</h3>
+                <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Total Skills</p>
+              </div>
+            )}
+          </section>
+        )}
 
         {/* About Section */}
         {portfolio.about && (
@@ -143,6 +180,9 @@ const Portfolio = () => {
               <div className="projects-grid">
                 {portfolio.projects.map((project, index) => (
                   <div key={index} className="project-card">
+                    {project.image && (
+                      <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px 8px 0 0', marginBottom: '10px' }} />
+                    )}
                     <h3 className="project-name">{project.name}</h3>
                     <p className="project-description">{project.description}</p>
                     {project.technologies && (
@@ -192,14 +232,17 @@ const Portfolio = () => {
         {/* Achievements Section */}
         {portfolio.achievements &&
           portfolio.achievements.length > 0 &&
-          portfolio.achievements[0] && (
+          (portfolio.achievements[0].title || typeof portfolio.achievements[0] === 'string') && (
             <section className="section achievements-section">
               <h2 className="section-title">Achievements</h2>
               <div className="achievements-grid">
                 {portfolio.achievements.map((achievement, index) => (
                   <div key={index} className="achievement-card">
+                    {typeof achievement !== 'string' && achievement.image && (
+                      <img src={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px' }} />
+                    )}
                     <span className="achievement-icon">🏆</span>
-                    <p className="achievement-text">{achievement}</p>
+                    <p className="achievement-text">{typeof achievement === 'string' ? achievement : achievement.title}</p>
                   </div>
                 ))}
               </div>
