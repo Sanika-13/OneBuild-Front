@@ -326,12 +326,14 @@ const Portfolio = () => {
           portfolio.achievements.length > 0 &&
           (portfolio.achievements[0].title || typeof portfolio.achievements[0] === 'string') && (
             <section className="section achievements-section">
-              <h2 className="section-title">Achievements</h2>
+              <h2 className="section-title">🏆 Achievements</h2>
               <div className="achievements-grid">
                 {portfolio.achievements.map((achievement, index) => (
                   <div key={index} className="achievement-card">
                     {typeof achievement !== 'string' && achievement.image && (
-                      <img src={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px' }} />
+                      <a href={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                        <img src={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px', cursor: 'pointer' }} />
+                      </a>
                     )}
                     <span className="achievement-icon">🏆</span>
                     <p className="achievement-text">{typeof achievement === 'string' ? achievement : achievement.title}</p>
