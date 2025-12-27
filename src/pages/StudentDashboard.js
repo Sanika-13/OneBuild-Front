@@ -817,7 +817,7 @@ const StudentDashboard = () => {
         <div className="form-section">
           <h3>Portfolio Statistics</h3>
           <div className="form-group-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
-            <div>
+            <div className="form-group">
               <label>Years of Experience</label>
               <input
                 type="text"
@@ -828,7 +828,7 @@ const StudentDashboard = () => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Internships Completed</label>
               <input
                 type="text"
@@ -839,7 +839,7 @@ const StudentDashboard = () => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Projects Completed</label>
               <input
                 type="text"
@@ -850,7 +850,7 @@ const StudentDashboard = () => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label>Total Skills</label>
               <input
                 type="text"
