@@ -7,6 +7,19 @@ const Portfolio = () => {
   const { uniqueUrl } = useParams();
   const [portfolio, setPortfolio] = useState(null);
   const [loading, setLoading] = useState(true);
+  const projectsRef = React.useRef(null);
+
+  const scrollProjects = (direction) => {
+    if (projectsRef.current) {
+      const { current } = projectsRef;
+      const scrollAmount = 400; // Approx card width
+      if (direction === 'left') {
+        current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchPortfolio = async () => {
@@ -177,35 +190,98 @@ const Portfolio = () => {
           portfolio.projects[0].name && (
             <section className="section projects-section">
               <h2 className="section-title">Projects</h2>
-              <div className="projects-grid">
-                {portfolio.projects.map((project, index) => (
-                  <div key={index} className="project-card">
-                    {project.image && (
-                      <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px 8px 0 0', marginBottom: '10px' }} />
-                    )}
-                    <h3 className="project-name">{project.name}</h3>
-                    <p className="project-description">{project.description}</p>
-                    {project.technologies && (
-                      <div className="tech-tags">
-                        {project.technologies.split(",").map((tech, i) => (
-                          <span key={i} className="tech-tag">
-                            {tech.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    {project.link && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="project-link"
-                      >
-                        View Project →
-                      </a>
-                    )}
-                  </div>
-                ))}
+              <div className="projects-carousel-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <button
+                  className="carousel-btn left-btn"
+                  onClick={() => scrollProjects('left')}
+                  style={{
+                    position: 'absolute',
+                    left: '-20px',
+                    zIndex: 10,
+                    background: 'rgba(255,255,255,0.2)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: '40px',
+                    height: '40px',
+                    cursor: 'pointer',
+                    fontSize: '1.5rem',
+                    backdropFilter: 'blur(5px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  &#8249;
+                </button>
+
+                <div className="projects-grid" ref={projectsRef} style={{
+                  display: 'flex',
+                  overflowX: 'auto',
+                  scrollBehavior: 'smooth',
+                  scrollSnapType: 'x mandatory',
+                  gap: '30px',
+                  padding: '20px 5px',
+                  width: '100%',
+                  scrollbarWidth: 'none' // Firefox
+                }}>
+                  {portfolio.projects.map((project, index) => (
+                    <div key={index} className="project-card" style={{
+                      minWidth: '400px', // Increased width per request
+                      flex: '0 0 auto',
+                      scrollSnapAlign: 'start'
+                    }}>
+                      {project.image && (
+                        <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px 8px 0 0', marginBottom: '10px' }} />
+                      )}
+                      <h3 className="project-name">{project.name}</h3>
+                      <p className="project-description">{project.description}</p>
+                      {project.technologies && (
+                        <div className="tech-tags">
+                          {project.technologies.split(",").map((tech, i) => (
+                            <span key={i} className="tech-tag">
+                              {tech.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-link"
+                        >
+                          View Project →
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  className="carousel-btn right-btn"
+                  onClick={() => scrollProjects('right')}
+                  style={{
+                    position: 'absolute',
+                    right: '-20px',
+                    zIndex: 10,
+                    background: 'rgba(255,255,255,0.2)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: '40px',
+                    height: '40px',
+                    cursor: 'pointer',
+                    fontSize: '1.5rem',
+                    backdropFilter: 'blur(5px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  &#8250;
+                </button>
               </div>
             </section>
           )}

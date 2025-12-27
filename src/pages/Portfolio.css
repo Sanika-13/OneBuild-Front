@@ -288,11 +288,18 @@
   font-size: 1.5rem;
 }
 
-/* Projects Section */
+/* Projects Grid -> Now Flex Carousel */
 .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  display: flex !important;
+  /* Override inline style if needed, but important for specificity */
+  overflow-x: auto;
   gap: 30px;
+  padding-bottom: 20px;
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.4) !important;
+  transform: scale(1.1);
 }
 
 .project-card {
