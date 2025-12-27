@@ -815,46 +815,50 @@ const StudentDashboard = () => {
 
         {/* Portfolio Stats */}
         <div className="form-section">
-          <h3>Portfolio Statistics (Optional)</h3>
+          <h3>Portfolio Statistics</h3>
           <div className="form-group-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
             <div>
-              <label>Years of Experience</label>
+              <label>Years of Experience *</label>
               <input
                 type="text"
                 name="yearsOfExperience"
                 value={formData.stats.yearsOfExperience}
                 onChange={handleStatsChange}
                 placeholder="e.g. 2+"
+                required
               />
             </div>
             <div>
-              <label>Internships Completed</label>
+              <label>Internships Completed *</label>
               <input
                 type="text"
                 name="internshipsCompleted"
                 value={formData.stats.internshipsCompleted}
                 onChange={handleStatsChange}
                 placeholder="e.g. 5+"
+                required
               />
             </div>
             <div>
-              <label>Projects Completed</label>
+              <label>Projects Completed *</label>
               <input
                 type="text"
                 name="projectsCompleted"
                 value={formData.stats.projectsCompleted}
                 onChange={handleStatsChange}
                 placeholder="e.g. 10+"
+                required
               />
             </div>
             <div>
-              <label>Total Skills</label>
+              <label>Total Skills *</label>
               <input
                 type="text"
                 name="totalSkills"
                 value={formData.stats.totalSkills}
                 onChange={handleStatsChange}
                 placeholder="e.g. 20+"
+                required
               />
             </div>
           </div>
