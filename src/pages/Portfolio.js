@@ -151,7 +151,7 @@ const Portfolio = () => {
               )}
               {portfolio.resume && (
                 <a
-                  href={portfolio.resume.startsWith('http') ? portfolio.resume : `${process.env.REACT_APP_API_URL}${portfolio.resume}`}
+                  href={portfolio.resume.startsWith('http') || portfolio.resume.startsWith('data:') ? portfolio.resume : `${process.env.REACT_APP_API_URL}${portfolio.resume}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="resume-btn"
