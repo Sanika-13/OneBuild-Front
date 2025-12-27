@@ -186,31 +186,28 @@ const Portfolio = () => {
                 gridTemplateColumns: 'min-content min-content',
                 gap: '20px 60px',
                 marginTop: '30px',
-                textAlign: 'left',
-                opacity: 0,
-                animation: 'fadeIn 0.5s ease-in forwards',
-                animationDelay: '5.5s' // Appear after typing animation
+                textAlign: 'left'
               }}>
                 {portfolio.stats.yearsOfExperience && (
-                  <div style={{ whiteSpace: 'nowrap' }}>
+                  <div style={{ whiteSpace: 'nowrap', opacity: 0, animation: 'fadeIn 0.5s ease-in forwards', animationDelay: '5.5s' }}>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.yearsOfExperience}</h3>
                     <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>Months of Experience</p>
                   </div>
                 )}
                 {portfolio.stats.internshipsCompleted && (
-                  <div style={{ whiteSpace: 'nowrap' }}>
+                  <div style={{ whiteSpace: 'nowrap', opacity: 0, animation: 'fadeIn 0.5s ease-in forwards', animationDelay: '5.8s' }}>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.internshipsCompleted}</h3>
                     <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>Internship Completed</p>
                   </div>
                 )}
                 {portfolio.stats.projectsCompleted && (
-                  <div style={{ whiteSpace: 'nowrap' }}>
+                  <div style={{ whiteSpace: 'nowrap', opacity: 0, animation: 'fadeIn 0.5s ease-in forwards', animationDelay: '6.1s' }}>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.projectsCompleted}</h3>
                     <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>Projects Completed</p>
                   </div>
                 )}
                 {portfolio.stats.totalSkills && (
-                  <div style={{ whiteSpace: 'nowrap' }}>
+                  <div style={{ whiteSpace: 'nowrap', opacity: 0, animation: 'fadeIn 0.5s ease-in forwards', animationDelay: '6.4s' }}>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.totalSkills}</h3>
                     <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>No of Skills</p>
                   </div>
