@@ -67,7 +67,8 @@
 .header-content {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 60px;
+  /* Restored gap for better spacing */
 }
 
 .profile-image {
@@ -77,8 +78,7 @@
   /* Enforce minimum width */
   min-height: 350px;
   /* Enforce minimum height */
-  margin-left: -20px;
-  /* Shift image slightly left as requested */
+  /* margin-left removed to restore spacing */
   flex-shrink: 0;
   /* Prevent squeezing in flex container */
   border-radius: 50%;
