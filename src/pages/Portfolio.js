@@ -150,10 +150,28 @@ const Portfolio = () => {
                 </p>
               )}
               {portfolio.resume && (
-                <a href={portfolio.resume.startsWith('http') ? portfolio.resume : `${process.env.REACT_APP_API_URL}${portfolio.resume}`} target="_blank" rel="noopener noreferrer" className="resume-btn" style={{
-                  marginTop: '15px', display: 'inline-block', padding: '8px 16px', background: '#fff', color: '#000', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold'
-                }}>
-                  Download Resume 📄
+                <a
+                  href={portfolio.resume.startsWith('http') ? portfolio.resume : `${process.env.REACT_APP_API_URL}${portfolio.resume}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="resume-btn"
+                  style={{
+                    marginTop: '20px',
+                    display: 'inline-block',
+                    padding: '10px 20px',
+                    background: '#667eea',
+                    color: '#fff',
+                    borderRadius: '30px',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+                    transition: 'transform 0.2s',
+                    border: '2px solid rgba(255,255,255,0.2)'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                  onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                  View Resume 📄
                 </a>
               )}
               {portfolio.stats && (
