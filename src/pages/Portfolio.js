@@ -132,6 +132,23 @@ const Portfolio = () => {
                   {portfolio.socialLinks.email}
                 </p>
               )}
+              {portfolio.socialLinks?.phone && (
+                <p className="phone-text" style={{
+                  fontSize: '0.95rem',
+                  marginTop: '5px',
+                  opacity: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  animation: 'fadeIn 0.5s ease-in forwards',
+                  animationDelay: '5.2s'
+                }}>
+                  <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.49-5.15-3.8-6.62-6.62l1.97-1.57c.23-.23.33-.55.24-1.01a17.3 17.3 0 00-.56-3.53.995.995 0 00-1-.79H4.9c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.01c0-.55-.45-1-1-1z" />
+                  </svg>
+                  {portfolio.socialLinks.phone}
+                </p>
+              )}
               {portfolio.resume && (
                 <a href={portfolio.resume.startsWith('http') ? portfolio.resume : `${process.env.REACT_APP_API_URL}${portfolio.resume}`} target="_blank" rel="noopener noreferrer" className="resume-btn" style={{
                   marginTop: '15px', display: 'inline-block', padding: '8px 16px', background: '#fff', color: '#000', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold'
