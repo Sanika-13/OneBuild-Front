@@ -156,53 +156,44 @@ const Portfolio = () => {
                   Download Resume 📄
                 </a>
               )}
+              {portfolio.stats && (
+                <div className="header-stats" style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'min-content min-content',
+                  gap: '20px 60px',
+                  marginTop: '30px',
+                  textAlign: 'left'
+                }}>
+                  {portfolio.stats.yearsOfExperience && (
+                    <div style={{ whiteSpace: 'nowrap' }}>
+                      <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>Months of Experience</p>
+                      <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.yearsOfExperience}</h3>
+                    </div>
+                  )}
+                  {portfolio.stats.internshipsCompleted && (
+                    <div style={{ whiteSpace: 'nowrap' }}>
+                      <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>Internship Completed</p>
+                      <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.internshipsCompleted}</h3>
+                    </div>
+                  )}
+                  {portfolio.stats.projectsCompleted && (
+                    <div style={{ whiteSpace: 'nowrap' }}>
+                      <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>Projects Completed</p>
+                      <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.projectsCompleted}</h3>
+                    </div>
+                  )}
+                  {portfolio.stats.totalSkills && (
+                    <div style={{ whiteSpace: 'nowrap' }}>
+                      <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>No of Skills</p>
+                      <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.totalSkills}</h3>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </header>
 
-        {/* Stats Section */}
-        {portfolio.stats && (
-          <section className="section stats-section" style={{
-            width: '100vw',
-            position: 'relative',
-            left: '50%',
-            right: '50%',
-            marginLeft: '-50vw',
-            marginRight: '-50vw',
-            padding: '20px 5%',
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '20px',
-            flexWrap: 'wrap'
-          }}>
-            <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-              {portfolio.stats.yearsOfExperience && (
-                <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
-                  <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.yearsOfExperience}</h3>
-                  <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Years Exp</p>
-                </div>
-              )}
-              {portfolio.stats.projectsCompleted && (
-                <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
-                  <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.projectsCompleted}</h3>
-                  <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Projects</p>
-                </div>
-              )}
-              {portfolio.stats.internshipsCompleted && (
-                <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
-                  <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.internshipsCompleted}</h3>
-                  <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Internships</p>
-                </div>
-              )}
-              {portfolio.stats.totalSkills && (
-                <div className="stat-card" style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '8px', textAlign: 'center', minWidth: '120px' }}>
-                  <h3 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{portfolio.stats.totalSkills}</h3>
-                  <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Total Skills</p>
-                </div>
-              )}
-            </div>
-          </section>
-        )}
 
         {/* About Section */}
         {portfolio.about && (

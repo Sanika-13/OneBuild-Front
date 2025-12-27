@@ -86,8 +86,8 @@
 
 .intro-text {
   flex: 1;
-  transform: translateY(-30px);
-  /* Move text slightly up */
+  transform: translate(30px, -40px);
+  /* Move text up and slightly right */
 }
 
 .greeting {
