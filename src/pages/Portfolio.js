@@ -171,7 +171,7 @@ const Portfolio = () => {
                   onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
                   onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
-                  View Resume 📄
+                  Resume
                 </a>
               )}
               {portfolio.stats && (
