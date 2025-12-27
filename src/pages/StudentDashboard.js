@@ -20,7 +20,7 @@ const StudentDashboard = () => {
     profileImage: null,
     skills: [],
     projects: [{ name: '', description: '', technologies: '', link: '' }],
-    achievements: [''],
+    achievements: [{ title: '', image: '' }],
     experience: [{ title: '', company: '', duration: '', description: '' }],
     socialLinks: {
       email: '',
@@ -430,7 +430,7 @@ const StudentDashboard = () => {
   const addAchievement = () => {
     setFormData(prev => ({
       ...prev,
-      achievements: [...prev.achievements, '']
+      achievements: [...prev.achievements, { title: '', image: '' }]
     }));
   };
 
@@ -566,8 +566,9 @@ const StudentDashboard = () => {
         </div>
       );
     } catch (error) {
-      setMessage('❌ Error creating portfolio');
-      console.error(error);
+      const errorMsg = error.response?.data?.error || error.response?.data?.message || '❌ Error creating portfolio';
+      setMessage(errorMsg);
+      console.error('Portfolio Create Error:', error);
     } finally {
       setLoading(false);
     }
