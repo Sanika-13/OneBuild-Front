@@ -12,7 +12,7 @@ const Portfolio = () => {
   const scrollProjects = (direction) => {
     if (projectsRef.current) {
       const { current } = projectsRef;
-      const scrollAmount = 400; // Approx card width
+      const scrollAmount = current.offsetWidth; // Scroll by full width
       if (direction === 'left') {
         current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       } else {
@@ -196,20 +196,20 @@ const Portfolio = () => {
                   onClick={() => scrollProjects('left')}
                   style={{
                     position: 'absolute',
-                    left: '-20px',
-                    zIndex: 10,
-                    background: 'rgba(255,255,255,0.2)',
+                    left: '10px',
+                    zIndex: 20,
+                    background: 'rgba(0,0,0,0.6)',
                     color: 'white',
-                    border: 'none',
+                    border: '1px solid rgba(255,255,255,0.2)',
                     borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
+                    width: '50px',
+                    height: '50px',
                     cursor: 'pointer',
                     fontSize: '1.5rem',
-                    backdropFilter: 'blur(5px)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    transition: 'all 0.3s'
                   }}
                 >
                   &#8249;
@@ -220,19 +220,23 @@ const Portfolio = () => {
                   overflowX: 'auto',
                   scrollBehavior: 'smooth',
                   scrollSnapType: 'x mandatory',
-                  gap: '30px',
-                  padding: '20px 5px',
+                  gap: '0',
+                  padding: '0',
                   width: '100%',
-                  scrollbarWidth: 'none' // Firefox
+                  scrollbarWidth: 'none',
+                  borderRadius: '15px'
                 }}>
                   {portfolio.projects.map((project, index) => (
                     <div key={index} className="project-card" style={{
-                      minWidth: '400px', // Increased width per request
-                      flex: '0 0 auto',
-                      scrollSnapAlign: 'start'
+                      minWidth: '100%',
+                      flex: '0 0 100%',
+                      scrollSnapAlign: 'center',
+                      boxSizing: 'border-box',
+                      padding: '20px',
+                      margin: 0
                     }}>
                       {project.image && (
-                        <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px 8px 0 0', marginBottom: '10px' }} />
+                        <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '350px', objectFit: 'cover', borderRadius: '12px', marginBottom: '20px' }} />
                       )}
                       <h3 className="project-name">{project.name}</h3>
                       <p className="project-description">{project.description}</p>
@@ -264,20 +268,20 @@ const Portfolio = () => {
                   onClick={() => scrollProjects('right')}
                   style={{
                     position: 'absolute',
-                    right: '-20px',
-                    zIndex: 10,
-                    background: 'rgba(255,255,255,0.2)',
+                    right: '10px',
+                    zIndex: 20,
+                    background: 'rgba(0,0,0,0.6)',
                     color: 'white',
-                    border: 'none',
+                    border: '1px solid rgba(255,255,255,0.2)',
                     borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
+                    width: '50px',
+                    height: '50px',
                     cursor: 'pointer',
                     fontSize: '1.5rem',
-                    backdropFilter: 'blur(5px)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    transition: 'all 0.3s'
                   }}
                 >
                   &#8250;
