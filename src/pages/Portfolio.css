@@ -1669,3 +1669,35 @@
     justify-content: center;
   }
 }
+/* ==================== RESUME BUTTON THEMES ==================== */
+/* Default (Dark Mode) - The user's preferred 'Blue' */
+.resume-btn {
+  background: #667eea;
+  color: white !important;
+  border: none;
+}
+
+/* Cyberpunk */
+.theme-cyberpunk .resume-btn {
+  background: #FF006E;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.6);
+  border: 1px solid #00F5FF;
+}
+
+/* Pastel */
+.theme-pastel .resume-btn {
+  background: #C3B1E1; /* Pastel Purple */
+  color: #2C2C2C !important;
+  box-shadow: 0 4px 15px rgba(195, 177, 225, 0.6);
+}
+
+/* Light & Minimalist */
+.theme-light .resume-btn,
+.theme-minimalist .resume-btn {
+  background: #000000;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important; /* Override the nuclear text-fill-color fix */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
