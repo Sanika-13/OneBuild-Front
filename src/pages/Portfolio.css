@@ -91,7 +91,7 @@
 }
 
 .greeting {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 15px;
   line-height: 1.2;
@@ -146,7 +146,7 @@
 }
 
 .welcome-text {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   opacity: 0.8;
   overflow: hidden;
   white-space: nowrap;
