@@ -101,7 +101,7 @@ const Portfolio = () => {
           <div className="header-content">
             {portfolio.profileImage && (
               <img
-                src={portfolio.profileImage.startsWith("http")
+                src={portfolio.profileImage.startsWith("http") || portfolio.profileImage.startsWith("data:")
                   ? portfolio.profileImage
                   : `${process.env.REACT_APP_API_URL}${portfolio.profileImage}`
                 }
@@ -151,9 +151,24 @@ const Portfolio = () => {
               )}
               {portfolio.resume && (
                 <a
-                  href={portfolio.resume.startsWith('http') || portfolio.resume.startsWith('data:') ? portfolio.resume : `${process.env.REACT_APP_API_URL}${portfolio.resume}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const resumeData = portfolio.resume;
+                    if (resumeData.startsWith('http')) {
+                      window.open(resumeData, '_blank');
+                    } else if (resumeData.startsWith('data:')) {
+                      fetch(resumeData)
+                        .then(res => res.blob())
+                        .then(blob => {
+                          const blobUrl = URL.createObjectURL(blob);
+                          window.open(blobUrl, '_blank');
+                        })
+                        .catch(err => console.error("Error opening PDF:", err));
+                    } else {
+                      window.open(`${process.env.REACT_APP_API_URL}${resumeData}`, '_blank');
+                    }
+                  }}
                   className="resume-btn"
                   style={{
                     marginTop: '20px',
