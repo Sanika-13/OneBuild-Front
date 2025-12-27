@@ -615,18 +615,34 @@ const StudentDashboard = () => {
           />
         </div>
 
-        {/* Profile Image */}
-        <div className="form-group">
-          <label>Profile Image *</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            required
-          />
-          {profileImagePreview && (
-            <img src={profileImagePreview} alt="Preview" className="image-preview" />
-          )}
+        {/* Profile Image & Resume */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div className="form-group">
+            <label>Profile Image *</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              required
+            />
+            {profileImagePreview && (
+              <img src={profileImagePreview} alt="Preview" className="image-preview" />
+            )}
+          </div>
+
+          <div className="form-group">
+            <label>Resume (PDF/Doc) *</label>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleResumeUpload}
+            />
+            {formData.resume && (
+              <div style={{ marginTop: '10px', color: '#28a745', fontWeight: 'bold' }}>
+                ✅ Resume Uploaded
+              </div>
+            )}
+          </div>
         </div>
 
 
