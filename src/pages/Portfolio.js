@@ -245,7 +245,7 @@ const Portfolio = () => {
                         margin: 0
                       }}>
                         {project.image && (
-                          <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                          <a href={project.link?.startsWith('http') ? project.link : `https://${project.link}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
                             <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
                           </a>
                         )}
@@ -262,7 +262,7 @@ const Portfolio = () => {
                         )}
                         {project.link && (
                           <a
-                            href={project.link}
+                            href={project.link.startsWith('http') ? project.link : `https://${project.link}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="project-link"
