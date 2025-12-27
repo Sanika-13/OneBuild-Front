@@ -186,30 +186,33 @@ const Portfolio = () => {
                 gridTemplateColumns: 'min-content min-content',
                 gap: '20px 60px',
                 marginTop: '30px',
-                textAlign: 'left'
+                textAlign: 'left',
+                opacity: 0,
+                animation: 'fadeIn 0.5s ease-in forwards',
+                animationDelay: '5.5s' // Appear after typing animation
               }}>
                 {portfolio.stats.yearsOfExperience && (
                   <div style={{ whiteSpace: 'nowrap' }}>
-                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>Months of Experience</p>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.yearsOfExperience}</h3>
+                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>Months of Experience</p>
                   </div>
                 )}
                 {portfolio.stats.internshipsCompleted && (
                   <div style={{ whiteSpace: 'nowrap' }}>
-                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>Internship Completed</p>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.internshipsCompleted}</h3>
+                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>Internship Completed</p>
                   </div>
                 )}
                 {portfolio.stats.projectsCompleted && (
                   <div style={{ whiteSpace: 'nowrap' }}>
-                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>Projects Completed</p>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.projectsCompleted}</h3>
+                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>Projects Completed</p>
                   </div>
                 )}
                 {portfolio.stats.totalSkills && (
                   <div style={{ whiteSpace: 'nowrap' }}>
-                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginBottom: '4px' }}>No of Skills</p>
                     <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, lineHeight: 1 }}>{portfolio.stats.totalSkills}</h3>
+                    <p style={{ fontSize: '0.9rem', color: '#ccc', marginTop: '4px', marginBottom: 0 }}>No of Skills</p>
                   </div>
                 )}
               </div>
@@ -270,253 +273,253 @@ const Portfolio = () => {
   {/* Projects Section */ }
   {
     portfolio.projects &&
-    portfolio.projects.length > 0 &&
-    portfolio.projects[0].name && (
-      <section className="section projects-section" style={{
-        width: '100vw',
-        position: 'relative',
-        left: '50%',
-        right: '50%',
-        marginLeft: '-50vw',
-        marginRight: '-50vw',
-        padding: '0 5%' // Add some side padding for aesthetics
-      }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}> {/* Inner container to keep title aligned if needed, or remove for full full width */}
-          <h2 className="section-title" style={{ paddingLeft: '20px' }}>Projects</h2>
-          <div className="projects-carousel-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            <button
-              className="carousel-btn left-btn"
-              onClick={() => scrollProjects('left')}
-              style={{
-                position: 'absolute',
-                left: '-55px',
-                zIndex: 20,
-                background: 'rgba(0,0,0,0.6)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                fontSize: '1.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s'
-              }}
-            >
-              &#8249;
-            </button>
+      portfolio.projects.length > 0 &&
+      portfolio.projects[0].name && (
+        <section className="section projects-section" style={{
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          padding: '0 5%' // Add some side padding for aesthetics
+        }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}> {/* Inner container to keep title aligned if needed, or remove for full full width */}
+            <h2 className="section-title" style={{ paddingLeft: '20px' }}>Projects</h2>
+            <div className="projects-carousel-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <button
+                className="carousel-btn left-btn"
+                onClick={() => scrollProjects('left')}
+                style={{
+                  position: 'absolute',
+                  left: '-55px',
+                  zIndex: 20,
+                  background: 'rgba(0,0,0,0.6)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontSize: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s'
+                }}
+              >
+                &#8249;
+              </button>
 
-            <div className="projects-grid" ref={projectsRef} style={{
-              display: 'flex',
-              overflowX: 'auto',
-              scrollBehavior: 'smooth',
-              scrollSnapType: 'x mandatory',
-              gap: '20px',
-              padding: '20px 0',
-              width: '100%',
-              scrollbarWidth: 'none',
-              borderRadius: '15px'
-            }}>
-              {portfolio.projects.map((project, index) => (
-                <div key={index} className="project-card" style={{
-                  minWidth: 'calc(33.333% - 14px)', // Show 3 cards (accounting for gap)
-                  flex: '0 0 calc(33.333% - 14px)',
-                  scrollSnapAlign: 'start',
-                  boxSizing: 'border-box',
-                  padding: '20px',
-                  margin: 0
-                }}>
-                  {project.image && (
-                    <a href={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
-                      <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
-                    </a>
-                  )}
-                  <h3 className="project-name">{project.name}</h3>
-                  <p className="project-description">{project.description}</p>
-                  {project.technologies && (
-                    <div className="tech-tags">
-                      {project.technologies.split(",").map((tech, i) => (
-                        <span key={i} className="tech-tag">
-                          {tech.trim()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  {project.link && (
-                    <a
-                      href={project.link.startsWith('http') ? project.link : `https://${project.link}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-link"
-                    >
-                      View Project →
-                    </a>
-                  )}
-                </div>
-              ))}
+              <div className="projects-grid" ref={projectsRef} style={{
+                display: 'flex',
+                overflowX: 'auto',
+                scrollBehavior: 'smooth',
+                scrollSnapType: 'x mandatory',
+                gap: '20px',
+                padding: '20px 0',
+                width: '100%',
+                scrollbarWidth: 'none',
+                borderRadius: '15px'
+              }}>
+                {portfolio.projects.map((project, index) => (
+                  <div key={index} className="project-card" style={{
+                    minWidth: 'calc(33.333% - 14px)', // Show 3 cards (accounting for gap)
+                    flex: '0 0 calc(33.333% - 14px)',
+                    scrollSnapAlign: 'start',
+                    boxSizing: 'border-box',
+                    padding: '20px',
+                    margin: 0
+                  }}>
+                    {project.image && (
+                      <a href={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                        <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
+                      </a>
+                    )}
+                    <h3 className="project-name">{project.name}</h3>
+                    <p className="project-description">{project.description}</p>
+                    {project.technologies && (
+                      <div className="tech-tags">
+                        {project.technologies.split(",").map((tech, i) => (
+                          <span key={i} className="tech-tag">
+                            {tech.trim()}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {project.link && (
+                      <a
+                        href={project.link.startsWith('http') ? project.link : `https://${project.link}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-link"
+                      >
+                        View Project →
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <button
+                className="carousel-btn right-btn"
+                onClick={() => scrollProjects('right')}
+                style={{
+                  position: 'absolute',
+                  right: '-55px',
+                  zIndex: 20,
+                  background: 'rgba(0,0,0,0.6)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontSize: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s'
+                }}
+              >
+                &#8250;
+              </button>
             </div>
-
-            <button
-              className="carousel-btn right-btn"
-              onClick={() => scrollProjects('right')}
-              style={{
-                position: 'absolute',
-                right: '-55px',
-                zIndex: 20,
-                background: 'rgba(0,0,0,0.6)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                fontSize: '1.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s'
-              }}
-            >
-              &#8250;
-            </button>
           </div>
-        </div>
-      </section>
-    )
+        </section>
+      )
   }
 
   {/* Experience Section */ }
   {
     portfolio.experience &&
-    portfolio.experience.length > 0 &&
-    portfolio.experience[0].title && (
-      <section className="section experience-section" style={{
-        width: '100vw',
-        position: 'relative',
-        left: '50%',
-        right: '50%',
-        marginLeft: '-50vw',
-        marginRight: '-50vw',
-        padding: '0 5%'
-      }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <h2 className="section-title" style={{ paddingLeft: '20px' }}>Experience</h2>
-          <div className="experience-grid" style={{ padding: '0 20px' }}>
-            {portfolio.experience.map((exp, index) => (
-              <div key={index} className="experience-card">
-                <h3 className="job-title">{exp.title}</h3>
-                <p className="company-name">{exp.company}</p>
-                <p className="duration">{exp.duration}</p>
-                <p className="job-description">{exp.description}</p>
-              </div>
-            ))}
+      portfolio.experience.length > 0 &&
+      portfolio.experience[0].title && (
+        <section className="section experience-section" style={{
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          padding: '0 5%'
+        }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <h2 className="section-title" style={{ paddingLeft: '20px' }}>Experience</h2>
+            <div className="experience-grid" style={{ padding: '0 20px' }}>
+              {portfolio.experience.map((exp, index) => (
+                <div key={index} className="experience-card">
+                  <h3 className="job-title">{exp.title}</h3>
+                  <p className="company-name">{exp.company}</p>
+                  <p className="duration">{exp.duration}</p>
+                  <p className="job-description">{exp.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    )
+        </section>
+      )
   }
 
   {/* Achievements Section */ }
   {
     portfolio.achievements &&
-    portfolio.achievements.length > 0 &&
-    (portfolio.achievements[0].title || typeof portfolio.achievements[0] === 'string') && (
-      <section className="section achievements-section" style={{
-        width: '100vw',
-        position: 'relative',
-        left: '50%',
-        right: '50%',
-        marginLeft: '-50vw',
-        marginRight: '-50vw',
-        padding: '0 5%'
-      }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <h2 className="section-title" style={{ paddingLeft: '20px' }}>🏆 Achievements</h2>
-          <div className="achievements-carousel-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            <button
-              className="carousel-btn left-btn"
-              onClick={() => scrollAchievements('left')}
-              style={{
-                position: 'absolute',
-                left: '-55px',
-                zIndex: 20,
-                background: 'rgba(0,0,0,0.6)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                fontSize: '1.5rem',
+      portfolio.achievements.length > 0 &&
+      (portfolio.achievements[0].title || typeof portfolio.achievements[0] === 'string') && (
+        <section className="section achievements-section" style={{
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          padding: '0 5%'
+        }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <h2 className="section-title" style={{ paddingLeft: '20px' }}>🏆 Achievements</h2>
+            <div className="achievements-carousel-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <button
+                className="carousel-btn left-btn"
+                onClick={() => scrollAchievements('left')}
+                style={{
+                  position: 'absolute',
+                  left: '-55px',
+                  zIndex: 20,
+                  background: 'rgba(0,0,0,0.6)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontSize: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s'
+                }}
+              >
+                &#8249;
+              </button>
+
+              <div className="achievements-grid" ref={achievementsRef} style={{
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s'
-              }}
-            >
-              &#8249;
-            </button>
+                overflowX: 'auto',
+                scrollBehavior: 'smooth',
+                scrollSnapType: 'x mandatory',
+                gap: '20px',
+                padding: '20px 0',
+                width: '100%',
+                scrollbarWidth: 'none',
+                borderRadius: '15px'
+              }}>
+                {portfolio.achievements.map((achievement, index) => (
+                  <div key={index} className="achievement-card" style={{
+                    minWidth: 'calc(33.333% - 14px)',
+                    flex: '0 0 calc(33.333% - 14px)',
+                    scrollSnapAlign: 'start',
+                    boxSizing: 'border-box',
+                    padding: '20px',
+                    margin: 0
+                  }}>
 
-            <div className="achievements-grid" ref={achievementsRef} style={{
-              display: 'flex',
-              overflowX: 'auto',
-              scrollBehavior: 'smooth',
-              scrollSnapType: 'x mandatory',
-              gap: '20px',
-              padding: '20px 0',
-              width: '100%',
-              scrollbarWidth: 'none',
-              borderRadius: '15px'
-            }}>
-              {portfolio.achievements.map((achievement, index) => (
-                <div key={index} className="achievement-card" style={{
-                  minWidth: 'calc(33.333% - 14px)',
-                  flex: '0 0 calc(33.333% - 14px)',
-                  scrollSnapAlign: 'start',
-                  boxSizing: 'border-box',
-                  padding: '20px',
-                  margin: 0
-                }}>
+                    {typeof achievement !== 'string' && achievement.image && (
+                      <a href={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                        <img src={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
+                      </a>
+                    )}
+                    <p className="achievement-text">{typeof achievement === 'string' ? achievement : achievement.title}</p>
+                  </div>
+                ))}
+              </div>
 
-                  {typeof achievement !== 'string' && achievement.image && (
-                    <a href={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
-                      <img src={achievement.image.startsWith('http') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
-                    </a>
-                  )}
-                  <p className="achievement-text">{typeof achievement === 'string' ? achievement : achievement.title}</p>
-                </div>
-              ))}
+              <button
+                className="carousel-btn right-btn"
+                onClick={() => scrollAchievements('right')}
+                style={{
+                  position: 'absolute',
+                  right: '-55px',
+                  zIndex: 20,
+                  background: 'rgba(0,0,0,0.6)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontSize: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s'
+                }}
+              >
+                &#8250;
+              </button>
             </div>
-
-            <button
-              className="carousel-btn right-btn"
-              onClick={() => scrollAchievements('right')}
-              style={{
-                position: 'absolute',
-                right: '-55px',
-                zIndex: 20,
-                background: 'rgba(0,0,0,0.6)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                fontSize: '1.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s'
-              }}
-            >
-              &#8250;
-            </button>
           </div>
-        </div>
-      </section>
-    )
+        </section>
+      )
   }
 
   {/* Connect Section */ }
