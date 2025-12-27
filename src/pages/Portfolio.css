@@ -67,7 +67,7 @@
 .header-content {
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 40px;
 }
 
 .profile-image {
@@ -77,6 +77,8 @@
   /* Enforce minimum width */
   min-height: 350px;
   /* Enforce minimum height */
+  margin-left: -20px;
+  /* Shift image slightly left as requested */
   flex-shrink: 0;
   /* Prevent squeezing in flex container */
   border-radius: 50%;
@@ -1669,6 +1671,7 @@
     justify-content: center;
   }
 }
+
 /* ==================== RESUME BUTTON THEMES ==================== */
 /* Default (Dark Mode) - The user's preferred 'Blue' */
 .resume-btn {
@@ -1687,7 +1690,8 @@
 
 /* Pastel */
 .theme-pastel .resume-btn {
-  background: #C3B1E1; /* Pastel Purple */
+  background: #C3B1E1;
+  /* Pastel Purple */
   color: #2C2C2C !important;
   box-shadow: 0 4px 15px rgba(195, 177, 225, 0.6);
 }
@@ -1697,9 +1701,7 @@
 .theme-minimalist .resume-btn {
   background: #000000;
   color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important; /* Override the nuclear text-fill-color fix */
+  -webkit-text-fill-color: #ffffff !important;
+  /* Override the nuclear text-fill-color fix */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-
-
-
