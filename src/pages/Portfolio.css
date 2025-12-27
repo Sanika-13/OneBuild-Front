@@ -67,16 +67,16 @@
 .header-content {
   display: flex;
   align-items: center;
-  gap: 80px;
-  /* Increased gap to push image left and text right */
+  gap: 120px;
+  /* User specified gap */
 }
 
 .profile-image {
-  width: 350px;
-  height: 350px;
-  min-width: 350px;
+  width: 400px;
+  height: 400px;
+  min-width: 400px;
   /* Enforce minimum width */
-  min-height: 350px;
+  min-height: 400px;
   /* Enforce minimum height */
   /* margin-left removed to restore spacing */
   flex-shrink: 0;
@@ -98,7 +98,8 @@
 }
 
 .greeting {
-  font-size: 2.5rem;
+  font-size: 3.1rem;
+  /* User specified font size */
   font-weight: 700;
   margin-bottom: 15px;
   line-height: 1.2;
@@ -153,7 +154,8 @@
 }
 
 .welcome-text {
-  font-size: 1.3rem;
+  font-size: 2.3rem;
+  /* User specified font size */
   opacity: 0.8;
   overflow: hidden;
   white-space: nowrap;
