@@ -67,8 +67,8 @@
 .header-content {
   display: flex;
   align-items: center;
-  gap: 60px;
-  /* Restored gap for better spacing */
+  gap: 80px;
+  /* Increased gap to push image left and text right */
 }
 
 .profile-image {
