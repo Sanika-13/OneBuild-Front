@@ -196,14 +196,14 @@ const Portfolio = () => {
                   onClick={() => scrollProjects('left')}
                   style={{
                     position: 'absolute',
-                    left: '10px',
+                    left: '-20px',
                     zIndex: 20,
                     background: 'rgba(0,0,0,0.6)',
                     color: 'white',
                     border: '1px solid rgba(255,255,255,0.2)',
                     borderRadius: '50%',
-                    width: '50px',
-                    height: '50px',
+                    width: '40px',
+                    height: '40px',
                     cursor: 'pointer',
                     fontSize: '1.5rem',
                     display: 'flex',
@@ -220,23 +220,23 @@ const Portfolio = () => {
                   overflowX: 'auto',
                   scrollBehavior: 'smooth',
                   scrollSnapType: 'x mandatory',
-                  gap: '0',
-                  padding: '0',
+                  gap: '20px',
+                  padding: '20px 5px',
                   width: '100%',
                   scrollbarWidth: 'none',
                   borderRadius: '15px'
                 }}>
                   {portfolio.projects.map((project, index) => (
                     <div key={index} className="project-card" style={{
-                      minWidth: '100%',
-                      flex: '0 0 100%',
-                      scrollSnapAlign: 'center',
+                      minWidth: 'calc(33.333% - 14px)', // Show 3 cards (accounting for gap)
+                      flex: '0 0 calc(33.333% - 14px)',
+                      scrollSnapAlign: 'start',
                       boxSizing: 'border-box',
                       padding: '20px',
                       margin: 0
                     }}>
                       {project.image && (
-                        <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '350px', objectFit: 'cover', borderRadius: '12px', marginBottom: '20px' }} />
+                        <img src={project.image.startsWith('http') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px' }} />
                       )}
                       <h3 className="project-name">{project.name}</h3>
                       <p className="project-description">{project.description}</p>
@@ -268,14 +268,14 @@ const Portfolio = () => {
                   onClick={() => scrollProjects('right')}
                   style={{
                     position: 'absolute',
-                    right: '10px',
+                    right: '-20px',
                     zIndex: 20,
                     background: 'rgba(0,0,0,0.6)',
                     color: 'white',
                     border: '1px solid rgba(255,255,255,0.2)',
                     borderRadius: '50%',
-                    width: '50px',
-                    height: '50px',
+                    width: '40px',
+                    height: '40px',
                     cursor: 'pointer',
                     fontSize: '1.5rem',
                     display: 'flex',
