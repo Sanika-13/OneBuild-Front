@@ -179,7 +179,7 @@ const Portfolio = () => {
                   display: 'grid',
                   gridTemplateColumns: 'min-content min-content',
                   gap: '20px 60px',
-                  marginTop: '50px',
+                  marginTop: '30px',
                   textAlign: 'left'
                 }}>
                   {portfolio.stats.yearsOfExperience && (
