@@ -205,7 +205,7 @@ const Portfolio = () => {
                     onClick={() => scrollProjects('left')}
                     style={{
                       position: 'absolute',
-                      left: '-10px',
+                      left: '-70px',
                       zIndex: 20,
                       background: 'rgba(0,0,0,0.6)',
                       color: 'white',
@@ -277,7 +277,7 @@ const Portfolio = () => {
                     onClick={() => scrollProjects('right')}
                     style={{
                       position: 'absolute',
-                      right: '-10px',
+                      right: '-70px',
                       zIndex: 20,
                       background: 'rgba(0,0,0,0.6)',
                       color: 'white',
