@@ -71,11 +71,11 @@
 }
 
 .profile-image {
-  width: 350px;
-  height: 350px;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   object-fit: cover;
-  border: 8px solid;
+  border: 4px solid;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
 }
@@ -86,8 +86,7 @@
 
 .intro-text {
   flex: 1;
-  transform: translate(30px, -40px);
-  /* Move text up and slightly right */
+  /* Removed transform to keep text aligned naturally */
 }
 
 .greeting {
