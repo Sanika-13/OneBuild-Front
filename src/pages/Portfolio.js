@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Portfolio.css";
+import "./Mobile.css";
 
 const Portfolio = () => {
   const { uniqueUrl } = useParams();
