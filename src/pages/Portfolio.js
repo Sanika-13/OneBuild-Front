@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Portfolio.css";
 import "./Mobile.css";
+import "./GlassTheme.css"; // Option 2: Glass Theme Overrides
 
 const Portfolio = () => {
   const { uniqueUrl } = useParams();

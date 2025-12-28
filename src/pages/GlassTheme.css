@@ -1,0 +1,104 @@
+/* =========================================
+   GLASS THEME OVERRIDES (Option 2)
+   ========================================= */
+
+/* 1. Animated Background */
+.portfolio-container {
+    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #141E30) !important;
+    background-size: 400% 400% !important;
+    animation: gradientBG 15s ease infinite !important;
+    min-height: 100vh;
+    padding: 40px 20px;
+    /* Add padding so glass card doesn't touch edges */
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 2. Glass Card Container */
+.portfolio-content {
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-radius: 24px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 60px !important;
+    overflow: hidden;
+    /* Keep content inside glass */
+}
+
+/* 3. Typography Adjustments for Glass */
+/* Force white text for visibility on dark glass */
+h1,
+h2,
+h3,
+h4,
+p,
+span,
+div,
+li,
+label {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.name-highlight {
+    background: linear-gradient(to right, #00f260, #0575e6) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+    font-weight: 800;
+}
+
+/* 4. Card Styling inside Glass */
+.about-card,
+.education-card,
+.project-card,
+.achievement-card,
+.experience-card,
+.skill-badge {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+    /* Flat inside glass */
+    transition: transform 0.3s ease, background 0.3s ease !important;
+}
+
+.about-card:hover,
+.education-card:hover,
+.project-card:hover,
+.achievement-card:hover,
+.experience-card:hover,
+.skill-badge:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-5px) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 5. Mobile Adjustments for Glass */
+@media (max-width: 768px) {
+    .portfolio-container {
+        padding: 10px !important;
+    }
+
+    .portfolio-content {
+        padding: 25px !important;
+        border-radius: 16px !important;
+        backdrop-filter: blur(10px) !important;
+        /* Reduce blur for performance */
+    }
+}
