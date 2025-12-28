@@ -67,6 +67,8 @@
 .header-content {
   display: flex;
   align-items: center;
+  justify-content: center;
+  /* Center content horizontally */
   gap: 120px;
   /* User specified gap */
 }
@@ -93,7 +95,7 @@
 }
 
 .intro-text {
-  flex: 1;
+  /* flex: 1; Removed to allow centering */
   /* Removed transform to keep text aligned naturally */
 }
 
