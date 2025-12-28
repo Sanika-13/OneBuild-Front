@@ -44,7 +44,7 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [fileLoading, setFileLoading] = useState(false);
-  const [saveAsNew, setSaveAsNew] = useState(false); // New state for versioning
+  const [saveAsNew, setSaveAsNew] = useState(true); // Default to TRUE for unique links every time
   const [showSkillsDropdown, setShowSkillsDropdown] = useState(false);
 
   // Skills options
