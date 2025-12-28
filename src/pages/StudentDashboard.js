@@ -43,6 +43,8 @@ const StudentDashboard = () => {
   const [profileImagePreview, setProfileImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [fileLoading, setFileLoading] = useState(false);
+  const [saveAsNew, setSaveAsNew] = useState(false); // New state for versioning
   const [showSkillsDropdown, setShowSkillsDropdown] = useState(false);
 
   // Skills options
@@ -494,7 +496,10 @@ const StudentDashboard = () => {
       const token = localStorage.getItem('token');
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/portfolio/create`,
-        formData,
+        {
+          ...formData,
+          isNewVersion: saveAsNew // Pass the flag
+        },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -964,9 +969,23 @@ const StudentDashboard = () => {
         {message && <div className="message">{message}</div>}
 
         {/* Action Buttons */}
-        <div className="form-actions">
+        <div className="form-actions" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#f8f9fa', padding: '10px', borderRadius: '8px', border: '1px solid #dee2e6' }}>
+            <input
+              type="checkbox"
+              id="saveAsNew"
+              checked={saveAsNew}
+              onChange={(e) => setSaveAsNew(e.target.checked)}
+              style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+            />
+            <label htmlFor="saveAsNew" style={{ fontSize: '0.95rem', cursor: 'pointer', color: '#333', fontWeight: '500' }}>
+              Save as New Version (Create new link)
+            </label>
+          </div>
+
           <button onClick={handleCreatePortfolio} className="create-btn" disabled={loading || !formData.name}>
-            {loading ? 'Creating...' : 'Create Portfolio'}
+            {loading ? 'Creating...' : (saveAsNew ? 'Create New Portfolio Version' : 'Update Portfolio')}
           </button>
         </div>
       </div>
