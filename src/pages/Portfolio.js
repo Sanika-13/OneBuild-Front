@@ -333,7 +333,7 @@ const Portfolio = () => {
                         margin: 0
                       }}>
                         {project.image && (
-                          <a href={project.image.startsWith('http') || project.image.startsWith('data:') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                          <a href="#" onClick={(e) => handleImageClick(e, project.image)} style={{ display: 'block' }}>
                             <img src={project.image.startsWith('http') || project.image.startsWith('data:') ? project.image : `${process.env.REACT_APP_API_URL}${project.image}`} alt={project.name} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
                           </a>
                         )}
@@ -485,7 +485,7 @@ const Portfolio = () => {
                       }}>
 
                         {typeof achievement !== 'string' && achievement.image && (
-                          <a href={achievement.image.startsWith('http') || achievement.image.startsWith('data:') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                          <a href="#" onClick={(e) => handleImageClick(e, achievement.image)} style={{ display: 'block' }}>
                             <img src={achievement.image.startsWith('http') || achievement.image.startsWith('data:') ? achievement.image : `${process.env.REACT_APP_API_URL}${achievement.image}`} alt="Achievement" style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px', marginBottom: '15px', cursor: 'pointer' }} />
                           </a>
                         )}
