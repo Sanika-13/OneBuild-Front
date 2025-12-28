@@ -35,7 +35,11 @@ const StudentDashboard = () => {
 
           // Handle Profile Image Preview
           if (data.profileImage) {
-            setProfileImagePreview(`${process.env.REACT_APP_API_URL}${data.profileImage}`);
+            if (data.profileImage.startsWith('http') || data.profileImage.startsWith('data:')) {
+              setProfileImagePreview(data.profileImage);
+            } else {
+              setProfileImagePreview(`${process.env.REACT_APP_API_URL}${data.profileImage}`);
+            }
           }
         }
       } catch (error) {
