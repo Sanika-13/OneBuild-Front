@@ -611,9 +611,15 @@ const StudentDashboard = () => {
         </div>
       );
     } catch (error) {
-      const errorMsg = error.response?.data?.error || error.response?.data?.message || '❌ Error creating portfolio';
-      setMessage(errorMsg);
-      console.error('Portfolio Create Error:', error);
+      console.error('Portfolio Create Error Details:', error);
+      // Detailed error message extraction
+      let detailedMsg = '❌ Error creating portfolio';
+
+      if (error.response?.data?.message) detailedMsg = `❌ ${error.response.data.message}`;
+      else if (error.response?.data?.error) detailedMsg = `❌ ${error.response.data.error}`;
+      else if (error.message) detailedMsg = `❌ ${error.message}`;
+
+      setMessage(detailedMsg);
     } finally {
       setLoading(false);
     }
