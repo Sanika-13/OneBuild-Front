@@ -632,34 +632,51 @@ const Portfolio = () => {
         </footer>
 
         {/* Floating Edit Button (Only visible to Owner) */}
-        {localStorage.getItem('token') && (
-          <button
-            onClick={() => navigate('/dashboard')}
-            style={{
-              position: 'fixed',
-              bottom: '30px',
-              right: '30px',
-              zIndex: 1000,
-              background: '#667eea',
-              color: 'white',
-              border: 'none',
-              borderRadius: '50px',
-              padding: '12px 24px',
-              fontSize: '1rem',
-              fontWeight: '600',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              transition: 'transform 0.2s ease',
-            }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-          >
-            ✏️ Edit Portfolio
-          </button>
-        )}
+        {(() => {
+          const token = localStorage.getItem('token');
+          const storedUser = localStorage.getItem('user');
+
+          if (!token || !storedUser || !portfolio) return false;
+
+          try {
+            const currentUser = JSON.parse(storedUser);
+            // Check if current logged-in user ID matches the portfolio's owner ID
+            // Handle both string and objectID formats by converting to string
+            if (String(currentUser._id) === String(portfolio.userId)) {
+              return true;
+            }
+          } catch (e) {
+            console.error("Error parsing user data", e);
+          }
+          return false;
+        })() && (
+            <button
+              onClick={() => navigate('/dashboard')}
+              style={{
+                position: 'fixed',
+                bottom: '30px',
+                right: '30px',
+                zIndex: 1000,
+                background: '#667eea',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50px',
+                padding: '12px 24px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                transition: 'transform 0.2s ease',
+              }}
+              onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              ✏️ Edit Portfolio
+            </button>
+          )}
       </div >
     </div >
   );
