@@ -654,7 +654,7 @@ const Portfolio = () => {
           return false;
         })() && (
             <button
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate('/dashboard?edit=true')}
               style={{
                 position: 'fixed',
                 bottom: '30px',

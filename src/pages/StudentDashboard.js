@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './StudentDashboard.css';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isEditMode = searchParams.get('edit') === 'true';
 
   useEffect(() => {
     const fetchMyPortfolio = async () => {
@@ -13,6 +15,9 @@ const StudentDashboard = () => {
         navigate('/login');
         return;
       }
+
+      // ONLY fetch data if we are in Edit Mode (via query param)
+      if (!isEditMode) return;
 
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/portfolio/me`, {
