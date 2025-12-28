@@ -56,7 +56,13 @@ const StudentDashboard = () => {
     };
 
     fetchMyPortfolio();
-  }, [navigate]);
+  }, [navigate, isEditMode]); // Added isEditMode to dependencies
+
+  // Clear any stale messages on component mount
+  useEffect(() => {
+    setMessage('');
+    setLoading(false);
+  }, []); // Run once on mount
 
   // Form state
   const [formData, setFormData] = useState({
@@ -537,15 +543,34 @@ const StudentDashboard = () => {
   // Create portfolio
   const handleCreatePortfolio = async () => {
     setLoading(true);
+    setMessage(''); // Clear previous messages
+
     try {
       const token = localStorage.getItem('token');
+
+      if (!token) {
+        setMessage('❌ Please login first');
+        navigate('/login');
+        return;
+      }
+
+      // Validate required fields
+      if (!formData.name || !formData.about) {
+        setMessage('❌ Please fill in all required fields (Name and About)');
+        setLoading(false);
+        return;
+      }
+
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/portfolio/create`,
         {
           ...formData,
           isNewVersion: true // ALWAYS force new version (unique link)
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          timeout: 30000 // 30 second timeout
+        }
       );
 
       const portfolioUrl = `${process.env.REACT_APP_FRONTEND_URL}/p/${response.data.portfolio.uniqueUrl}`;
@@ -617,12 +642,34 @@ const StudentDashboard = () => {
       );
     } catch (error) {
       console.error('Portfolio Create Error Details:', error);
+
       // Detailed error message extraction
       let detailedMsg = '❌ Error creating portfolio';
 
-      if (error.response?.data?.message) detailedMsg = `❌ ${error.response.data.message}`;
-      else if (error.response?.data?.error) detailedMsg = `❌ ${error.response.data.error}`;
-      else if (error.message) detailedMsg = `❌ ${error.message}`;
+      if (error.code === 'ECONNABORTED') {
+        detailedMsg = '❌ Request timeout - Server is taking too long. Please try again.';
+      } else if (error.code === 'ERR_NETWORK') {
+        detailedMsg = '❌ Network error - Please check your internet connection and make sure the backend server is running.';
+      } else if (error.response) {
+        // Server responded with error
+        if (error.response.status === 401) {
+          detailedMsg = '❌ Session expired - Please login again';
+          setTimeout(() => navigate('/login'), 2000);
+        } else if (error.response.status === 400) {
+          detailedMsg = `❌ ${error.response.data?.message || error.response.data?.error || 'Invalid data provided'}`;
+        } else if (error.response.status === 500) {
+          detailedMsg = '❌ Server error - Please try again later';
+        } else if (error.response.data?.message) {
+          detailedMsg = `❌ ${error.response.data.message}`;
+        } else if (error.response.data?.error) {
+          detailedMsg = `❌ ${error.response.data.error}`;
+        }
+      } else if (error.request) {
+        // Request made but no response
+        detailedMsg = '❌ Cannot reach server - Please make sure the backend is running on ' + process.env.REACT_APP_API_URL;
+      } else if (error.message) {
+        detailedMsg = `❌ ${error.message}`;
+      }
 
       setMessage(detailedMsg);
     } finally {
@@ -631,7 +678,14 @@ const StudentDashboard = () => {
   };
 
   const handleLogout = () => {
+    // Clear all authentication data
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    // Clear any cached form data (optional but safer)
+    localStorage.clear();
+
+    // Navigate to login
     navigate('/login');
   };
 

@@ -5,6 +5,8 @@ import './Auth.css';
 const Register = () => {
     const navigate = useNavigate();
     const [showSuccess, setShowSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -22,10 +24,22 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Prevent multiple submissions
+        if (loading) return;
+
+        setError('');
+
         if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
+            setError('Passwords do not match!');
             return;
         }
+
+        if (formData.password.length < 6) {
+            setError('Password must be at least 6 characters long');
+            return;
+        }
+
+        setLoading(true);
 
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
@@ -43,14 +57,28 @@ const Register = () => {
             const data = await response.json();
 
             if (response.ok) {
-                // Show success popup
+                // Clear error and show success popup
+                setError('');
+
+                // Store token and user data from registration response
+                if (data.token && data.user) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                }
+
                 setShowSuccess(true);
             } else {
-                alert(data.error || 'Registration failed');
+                setError(data.error || 'Registration failed');
             }
         } catch (error) {
             console.error('Registration Error:', error);
-            alert('Something went wrong. Please try again.');
+            if (error.message.includes('Failed to fetch')) {
+                setError('Cannot connect to server. Please make sure the backend is running.');
+            } else {
+                setError('Something went wrong. Please try again.');
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -82,6 +110,20 @@ const Register = () => {
                 </div>
 
                 <form onSubmit={handleSubmit} className="auth-form">
+                    {error && (
+                        <div style={{
+                            background: '#f8d7da',
+                            color: '#721c24',
+                            padding: '12px',
+                            borderRadius: '8px',
+                            marginBottom: '15px',
+                            border: '1px solid #f5c6cb',
+                            fontSize: '0.9rem'
+                        }}>
+                            {error}
+                        </div>
+                    )}
+
                     <div className="form-group">
                         <label>Full Name</label>
                         <input
@@ -90,6 +132,7 @@ const Register = () => {
                             value={formData.name}
                             onChange={handleChange}
                             placeholder="Enter your name"
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -102,6 +145,7 @@ const Register = () => {
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="Enter your email"
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -114,6 +158,7 @@ const Register = () => {
                             value={formData.password}
                             onChange={handleChange}
                             placeholder="Create a password"
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -126,11 +171,14 @@ const Register = () => {
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             placeholder="Confirm your password"
+                            disabled={loading}
                             required
                         />
                     </div>
 
-                    <button type="submit" className="auth-btn">Register</button>
+                    <button type="submit" className="auth-btn" disabled={loading}>
+                        {loading ? 'Registering...' : 'Register'}
+                    </button>
                 </form>
 
                 <div className="auth-footer">

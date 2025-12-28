@@ -4,6 +4,8 @@ import './Auth.css';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         password: ''
@@ -19,6 +21,12 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Prevent multiple submissions
+        if (loading) return;
+
+        setLoading(true);
+        setError('');
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
                 method: 'POST',
@@ -26,7 +34,7 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: formData.name, // Using 'name' but backend checks name or email
+                    name: formData.name,
                     password: formData.password
                 }),
             });
@@ -34,6 +42,9 @@ const Login = () => {
             const data = await response.json();
 
             if (response.ok) {
+                // Clear any existing errors
+                setError('');
+
                 // Store token and user data
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
@@ -41,11 +52,17 @@ const Login = () => {
                 // Redirect to dashboard
                 navigate('/dashboard');
             } else {
-                alert(data.error || 'Invalid credentials');
+                setError(data.error || 'Invalid credentials');
             }
         } catch (error) {
             console.error('Login Error:', error);
-            alert('Something went wrong. Please try again.');
+            if (error.message.includes('Failed to fetch')) {
+                setError('Cannot connect to server. Please make sure the backend is running.');
+            } else {
+                setError('Something went wrong. Please try again.');
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -59,6 +76,20 @@ const Login = () => {
                 </div>
 
                 <form onSubmit={handleSubmit} className="auth-form">
+                    {error && (
+                        <div style={{
+                            background: '#f8d7da',
+                            color: '#721c24',
+                            padding: '12px',
+                            borderRadius: '8px',
+                            marginBottom: '15px',
+                            border: '1px solid #f5c6cb',
+                            fontSize: '0.9rem'
+                        }}>
+                            {error}
+                        </div>
+                    )}
+
                     <div className="form-group">
                         <label>Name</label>
                         <input
@@ -67,6 +98,7 @@ const Login = () => {
                             value={formData.name}
                             onChange={handleChange}
                             placeholder="Enter your name"
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -79,11 +111,14 @@ const Login = () => {
                             value={formData.password}
                             onChange={handleChange}
                             placeholder="Enter your password"
+                            disabled={loading}
                             required
                         />
                     </div>
 
-                    <button type="submit" className="auth-btn">Login</button>
+                    <button type="submit" className="auth-btn" disabled={loading}>
+                        {loading ? 'Logging in...' : 'Login'}
+                    </button>
                 </form>
 
                 <div className="auth-footer">

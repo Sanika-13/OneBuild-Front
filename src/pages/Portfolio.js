@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import ChatBot from "../components/ChatBot";
 import "./Portfolio.css";
 import "./Mobile.css";
 
@@ -680,6 +681,9 @@ const Portfolio = () => {
               ✏️ Edit Portfolio
             </button>
           )}
+
+        {/* AI Chatbot */}
+        {portfolio && <ChatBot portfolioData={portfolio} />}
       </div >
     </div >
   );

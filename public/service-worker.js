@@ -1,5 +1,5 @@
 // Service Worker for OneBuild PWA
-const CACHE_NAME = 'onebuild-v1';
+const CACHE_NAME = 'onebuild-v2';
 const urlsToCache = [
     '/',
     '/static/css/main.css',
