@@ -7,10 +7,46 @@ const StudentDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    }
+    const fetchMyPortfolio = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/portfolio/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (response.data) {
+          console.log("✅ Pre-filling form with data:", response.data);
+          // Merge existing data, but ensure nested objects/arrays are handled if needed
+          // For now, simple spread works because structure matches, but check socialLinks
+          const data = response.data;
+
+          setFormData(prev => ({
+            ...prev,
+            ...data,
+            // Ensure defaulting if some fields are missing in old data
+            socialLinks: { ...prev.socialLinks, ...data.socialLinks },
+            stats: { ...prev.stats, ...data.stats }
+          }));
+
+          // Handle Profile Image Preview
+          if (data.profileImage) {
+            setProfileImagePreview(`${process.env.REACT_APP_API_URL}${data.profileImage}`);
+          }
+        }
+      } catch (error) {
+        // 404 is expected for new users, so don't alert error
+        if (error.response && error.response.status !== 404) {
+          console.error("Error fetching existing portfolio:", error);
+        }
+      }
+    };
+
+    fetchMyPortfolio();
   }, [navigate]);
 
   // Form state
