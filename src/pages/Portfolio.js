@@ -71,6 +71,23 @@ const Portfolio = () => {
     );
   }
 
+  const handleImageClick = (e, imageUrl) => {
+    e.preventDefault();
+    if (imageUrl.startsWith('data:')) {
+      fetch(imageUrl)
+        .then(res => res.blob())
+        .then(blob => {
+          const blobUrl = URL.createObjectURL(blob);
+          window.open(blobUrl, '_blank');
+        })
+        .catch(err => console.error("Error opening image:", err));
+    } else if (imageUrl.startsWith('http')) {
+      window.open(imageUrl, '_blank');
+    } else {
+      window.open(`${process.env.REACT_APP_API_URL}${imageUrl}`, '_blank');
+    }
+  };
+
   const theme = portfolio.theme || "dark";
   const animation = portfolio.animation || "none";
 
