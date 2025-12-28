@@ -634,7 +634,7 @@ const Portfolio = () => {
         {/* Floating Edit Button (Only visible to Owner) */}
         {localStorage.getItem('token') && (
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/dashboard')}
             style={{
               position: 'fixed',
               bottom: '30px',
