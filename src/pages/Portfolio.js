@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Portfolio.css";
 
 const Portfolio = () => {
   const { uniqueUrl } = useParams();
+  const navigate = useNavigate();
   const [portfolio, setPortfolio] = useState(null);
   const [loading, setLoading] = useState(true);
   const projectsRef = useRef(null);
@@ -629,6 +630,36 @@ const Portfolio = () => {
           </p>
           <p className="powered-by">Made by OneBuild :)</p>
         </footer>
+
+        {/* Floating Edit Button (Only visible to Owner) */}
+        {localStorage.getItem('token') && (
+          <button
+            onClick={() => navigate('/')}
+            style={{
+              position: 'fixed',
+              bottom: '30px',
+              right: '30px',
+              zIndex: 1000,
+              background: '#667eea',
+              color: 'white',
+              border: 'none',
+              borderRadius: '50px',
+              padding: '12px 24px',
+              fontSize: '1rem',
+              fontWeight: '600',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'transform 0.2s ease',
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            ✏️ Edit Portfolio
+          </button>
+        )}
       </div >
     </div >
   );
