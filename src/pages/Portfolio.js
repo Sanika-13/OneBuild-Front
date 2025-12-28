@@ -191,8 +191,9 @@ const Portfolio = () => {
                     marginTop: '20px',
                     display: 'inline-block',
                     padding: '10px 20px',
-                    // Removed complex delayed animation to ensure visibility
+                    opacity: 0, // Hidden initially
                     animation: 'fadeIn 0.5s ease-in forwards',
+                    animationDelay: '5.4s' // Appear after phone number (which is 5.2s)
                   }}
                   onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
                   onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
