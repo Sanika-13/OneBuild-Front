@@ -521,7 +521,7 @@ const StudentDashboard = () => {
             marginBottom: '15px',
             textAlign: 'center'
           }}>
-            ✅ Your portfolio is ready! 🎉
+            ✅ Portfolio Created! (Unique Link Generated) 🎉
           </p>
           <p style={{
             fontSize: '1.1rem',
