@@ -641,8 +641,10 @@ const Portfolio = () => {
           try {
             const currentUser = JSON.parse(storedUser);
             // Check if current logged-in user ID matches the portfolio's owner ID
-            // Handle both string and objectID formats by converting to string
-            if (String(currentUser._id) === String(portfolio.userId)) {
+            // Handle both 'id' (auth response) and '_id' (mongo doc) formats
+            const currentUserId = currentUser.id || currentUser._id;
+
+            if (currentUserId && String(currentUserId) === String(portfolio.userId)) {
               return true;
             }
           } catch (e) {
