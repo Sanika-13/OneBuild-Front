@@ -1086,6 +1086,9 @@ const StudentDashboard = () => {
           </button>
         </div>
       </div>
+
+      {/* Live Preview Panel */}
+      <LivePreview formData={formData} profileImagePreview={profileImagePreview} />
     </div>
   );
 };
