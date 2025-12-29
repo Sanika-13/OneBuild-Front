@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import StudentDashboard from './pages/StudentDashboard';
 import Portfolio from './pages/Portfolio';
+import PreviewPage from './pages/PreviewPage';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<StudentDashboard />} />
+        <Route path="/preview" element={<PreviewPage />} />
         <Route path="/p/:uniqueUrl" element={<Portfolio />} />
       </Routes>
     </Router>
