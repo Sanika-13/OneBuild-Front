@@ -691,429 +691,424 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="student-dashboard" style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      {/* Left Side - Form */}
-      <div style={{
-        flex: showLivePreview ? '0 0 50%' : '1',
-        overflowY: 'auto',
-        transition: 'flex 0.3s ease',
-        borderRight: showLivePreview ? '2px solid #667eea' : 'none'
-      }}>
-        <div className="dashboard-header">
-          <h1>Create Your Portfolio</h1>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <button
-              onClick={() => {
-                setShowLivePreview(!showLivePreview);
-                // Save current data for preview
-                localStorage.setItem('previewData', JSON.stringify(formData));
-              }}
-              className="preview-btn"
-              style={{
-                padding: '10px 20px',
-                background: showLivePreview
-                  ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-                  : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '0.95rem',
-                fontWeight: '600',
-                transition: 'all 0.3s'
-              }}
-            >
-              {showLivePreview ? '✕ Close Preview' : '👁️ Live Preview'}
-            </button>
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
+    <div className="student-dashboard">
+      <div className="dashboard-header">
+        <h1>Create Your Portfolio</h1>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            onClick={() => {
+              // Store current form data in localStorage for preview
+              localStorage.setItem('previewData', JSON.stringify(formData));
+              // Open preview in new tab
+              window.open('/preview', '_blank');
+            }}
+            className="preview-btn"
+            style={{
+              padding: '10px 20px',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              transition: 'transform 0.2s'
+            }}
+            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+          >
+            👁️ Live Preview
+          </button>
+          <button onClick={handleLogout} className="logout-btn">Logout</button>
+        </div>
+      </div>
+
+
+
+      <div className="form-container">
+        {/* Name */}
+        <div className="form-group">
+          <label>Name *</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+
+        {/* About */}
+        <div className="form-group">
+          <label>About *</label>
+          <textarea
+            name="about"
+            value={formData.about}
+            onChange={handleInputChange}
+            placeholder="Tell us about yourself..."
+            rows="4"
+            required
+          />
+        </div>
+
+        {/* Profile Image & Resume */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div className="form-group">
+            <label>Profile Image *</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              required
+            />
+            {profileImagePreview && (
+              <img src={profileImagePreview} alt="Preview" className="image-preview" />
+            )}
+          </div>
+
+          <div className="form-group">
+            <label>Resume (PDF/Doc) *</label>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleResumeUpload}
+            />
+            {formData.resume && (
+              <div style={{ marginTop: '10px', color: '#28a745', fontWeight: 'bold' }}>
+                ✅ Resume Uploaded
+              </div>
+            )}
           </div>
         </div>
 
 
-        <div className="form-container">
-          {/* Name */}
-          <div className="form-group">
-            <label>Name *</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder="Enter your name"
-              required
-            />
-          </div>
-
-          {/* About */}
-          <div className="form-group">
-            <label>About *</label>
-            <textarea
-              name="about"
-              value={formData.about}
-              onChange={handleInputChange}
-              placeholder="Tell us about yourself..."
-              rows="4"
-              required
-            />
-          </div>
-
-          {/* Profile Image & Resume */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div className="form-group">
-              <label>Profile Image *</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                required
-              />
-              {profileImagePreview && (
-                <img src={profileImagePreview} alt="Preview" className="image-preview" />
-              )}
-            </div>
-
-            <div className="form-group">
-              <label>Resume (PDF/Doc) *</label>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleResumeUpload}
-              />
-              {formData.resume && (
-                <div style={{ marginTop: '10px', color: '#28a745', fontWeight: 'bold' }}>
-                  ✅ Resume Uploaded
-                </div>
-              )}
-            </div>
-          </div>
-
-
-          {/* Skills */}
-          <div className="form-group">
-            <label>Skills *</label>
-            <div className="skills-dropdown-wrapper">
-              <div
-                className="skills-dropdown-trigger"
-                onClick={() => setShowSkillsDropdown(!showSkillsDropdown)}
-              >
-                <div className="selected-skills-display">
-                  {formData.skills.length > 0 ? (
-                    <div className="selected-skills-tags">
-                      {formData.skills.map((skill, index) => (
-                        <span key={index} className="selected-skill-tag">
-                          {skill}
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setFormData(prev => ({
-                                ...prev,
-                                skills: prev.skills.filter(s => s !== skill)
-                              }));
-                            }}
-                            className="remove-skill-btn"
-                          >
-                            ×
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-                  ) : (
-                    <span className="placeholder-text">Click to select skills...</span>
-                  )}
-                </div>
-                <span className="dropdown-arrow">{showSkillsDropdown ? '▲' : '▼'}</span>
-              </div>
-
-              {showSkillsDropdown && (
-                <div className="skills-dropdown-menu">
-                  {skillsOptions.map(skill => (
-                    <label key={skill} className="skill-dropdown-item">
-                      <input
-                        type="checkbox"
-                        value={skill}
-                        checked={formData.skills.includes(skill)}
-                        onChange={(e) => {
-                          const skill = e.target.value;
-                          if (e.target.checked) {
-                            setFormData(prev => ({
-                              ...prev,
-                              skills: [...prev.skills, skill]
-                            }));
-                          } else {
+        {/* Skills */}
+        <div className="form-group">
+          <label>Skills *</label>
+          <div className="skills-dropdown-wrapper">
+            <div
+              className="skills-dropdown-trigger"
+              onClick={() => setShowSkillsDropdown(!showSkillsDropdown)}
+            >
+              <div className="selected-skills-display">
+                {formData.skills.length > 0 ? (
+                  <div className="selected-skills-tags">
+                    {formData.skills.map((skill, index) => (
+                      <span key={index} className="selected-skill-tag">
+                        {skill}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
                             setFormData(prev => ({
                               ...prev,
                               skills: prev.skills.filter(s => s !== skill)
                             }));
-                          }
-                        }}
-                      />
-                      <span>{skill}</span>
-                    </label>
-                  ))}
-                </div>
+                          }}
+                          className="remove-skill-btn"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <span className="placeholder-text">Click to select skills...</span>
+                )}
+              </div>
+              <span className="dropdown-arrow">{showSkillsDropdown ? '▲' : '▼'}</span>
+            </div>
+
+            {showSkillsDropdown && (
+              <div className="skills-dropdown-menu">
+                {skillsOptions.map(skill => (
+                  <label key={skill} className="skill-dropdown-item">
+                    <input
+                      type="checkbox"
+                      value={skill}
+                      checked={formData.skills.includes(skill)}
+                      onChange={(e) => {
+                        const skill = e.target.value;
+                        if (e.target.checked) {
+                          setFormData(prev => ({
+                            ...prev,
+                            skills: [...prev.skills, skill]
+                          }));
+                        } else {
+                          setFormData(prev => ({
+                            ...prev,
+                            skills: prev.skills.filter(s => s !== skill)
+                          }));
+                        }
+                      }}
+                    />
+                    <span>{skill}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+          <small>{formData.skills.length} skill(s) selected</small>
+        </div>
+
+        {/* Projects */}
+        <div className="form-section">
+          <h3>Projects</h3>
+          {formData.projects.map((project, index) => (
+            <div key={index} className="dynamic-item">
+              <input
+                type="text"
+                placeholder="Project Name"
+                value={project.name}
+                onChange={(e) => handleProjectChange(index, 'name', e.target.value)}
+              />
+              <textarea
+                placeholder="Description"
+                value={project.description}
+                onChange={(e) => handleProjectChange(index, 'description', e.target.value)}
+                rows="3"
+              />
+              <input
+                type="text"
+                placeholder="Technologies (comma separated)"
+                value={project.technologies}
+                onChange={(e) => handleProjectChange(index, 'technologies', e.target.value)}
+              />
+              <input
+                type="url"
+                placeholder="Project Link (optional)"
+                value={project.link}
+                onChange={(e) => handleProjectChange(index, 'link', e.target.value)}
+              />
+              <div className="upload-btn-wrapper">
+                <label>Project Image:</label>
+                <input type="file" accept="image/*" onChange={(e) => handleProjectImageUpload(index, e)} />
+                {project.image && <small>✅ Image Uploaded</small>}
+              </div>
+              {index > 0 && (
+                <button type="button" onClick={() => removeProject(index)} className="remove-btn">
+                  Remove
+                </button>
               )}
             </div>
-            <small>{formData.skills.length} skill(s) selected</small>
-          </div>
+          ))}
+          <button type="button" onClick={addProject} className="add-btn">
+            + Add More Project
+          </button>
+        </div>
 
-          {/* Projects */}
-          <div className="form-section">
-            <h3>Projects</h3>
-            {formData.projects.map((project, index) => (
-              <div key={index} className="dynamic-item">
-                <input
-                  type="text"
-                  placeholder="Project Name"
-                  value={project.name}
-                  onChange={(e) => handleProjectChange(index, 'name', e.target.value)}
-                />
-                <textarea
-                  placeholder="Description"
-                  value={project.description}
-                  onChange={(e) => handleProjectChange(index, 'description', e.target.value)}
-                  rows="3"
-                />
-                <input
-                  type="text"
-                  placeholder="Technologies (comma separated)"
-                  value={project.technologies}
-                  onChange={(e) => handleProjectChange(index, 'technologies', e.target.value)}
-                />
-                <input
-                  type="url"
-                  placeholder="Project Link (optional)"
-                  value={project.link}
-                  onChange={(e) => handleProjectChange(index, 'link', e.target.value)}
-                />
-                <div className="upload-btn-wrapper">
-                  <label>Project Image:</label>
-                  <input type="file" accept="image/*" onChange={(e) => handleProjectImageUpload(index, e)} />
-                  {project.image && <small>✅ Image Uploaded</small>}
-                </div>
-                {index > 0 && (
-                  <button type="button" onClick={() => removeProject(index)} className="remove-btn">
-                    Remove
-                  </button>
-                )}
-              </div>
-            ))}
-            <button type="button" onClick={addProject} className="add-btn">
-              + Add More Project
-            </button>
-          </div>
-
-          {/* Achievements */}
-          <div className="form-section">
-            <h3>Achievements (Optional)</h3>
-            {formData.achievements.map((achievement, index) => (
-              <div key={index} className="dynamic-item">
-                <input
-                  type="text"
-                  placeholder="Achievement Title"
-                  value={typeof achievement === 'string' ? achievement : achievement.title}
-                  onChange={(e) => handleAchievementTitleChange(index, e.target.value)}
-                />
-                <div className="upload-btn-wrapper">
-                  <input type="file" accept="image/*" onChange={(e) => handleAchievementImageUpload(index, e)} />
-                  {(typeof achievement !== 'string' && achievement.image) && <small>✅ Image Uploaded</small>}
-                </div>
-                {index > 0 && (
-                  <button type="button" onClick={() => removeAchievement(index)} className="remove-btn">
-                    Remove
-                  </button>
-                )}
-              </div>
-            ))}
-            <button type="button" onClick={addAchievement} className="add-btn">
-              + Add More Achievement
-            </button>
-          </div>
-
-          {/* Experience */}
-          <div className="form-section">
-            <h3>Experience</h3>
-            {formData.experience.map((exp, index) => (
-              <div key={index} className="dynamic-item">
-                <input
-                  type="text"
-                  placeholder="Job Title/Role"
-                  value={exp.title}
-                  onChange={(e) => handleExperienceChange(index, 'title', e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Company Name"
-                  value={exp.company}
-                  onChange={(e) => handleExperienceChange(index, 'company', e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Duration (e.g., Jan 2023 - Dec 2023)"
-                  value={exp.duration}
-                  onChange={(e) => handleExperienceChange(index, 'duration', e.target.value)}
-                />
-                <textarea
-                  placeholder="Description"
-                  value={exp.description}
-                  onChange={(e) => handleExperienceChange(index, 'description', e.target.value)}
-                  rows="3"
-                />
-                {index > 0 && (
-                  <button type="button" onClick={() => removeExperience(index)} className="remove-btn">
-                    Remove
-                  </button>
-                )}
-              </div>
-            ))}
-            <button type="button" onClick={addExperience} className="add-btn">
-              + Add More Experience
-            </button>
-          </div>
-
-          {/* Portfolio Stats */}
-          <div className="form-section">
-            <h3>Portfolio Statistics</h3>
-            <div className="form-group-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
-              <div className="form-group">
-                <label>Years of Experience</label>
-                <input
-                  type="text"
-                  name="yearsOfExperience"
-                  value={formData.stats.yearsOfExperience}
-                  onChange={handleStatsChange}
-                  placeholder="e.g. 2+"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Internships Completed</label>
-                <input
-                  type="text"
-                  name="internshipsCompleted"
-                  value={formData.stats.internshipsCompleted}
-                  onChange={handleStatsChange}
-                  placeholder="e.g. 5+"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Projects Completed</label>
-                <input
-                  type="text"
-                  name="projectsCompleted"
-                  value={formData.stats.projectsCompleted}
-                  onChange={handleStatsChange}
-                  placeholder="e.g. 10+"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Total Skills</label>
-                <input
-                  type="text"
-                  name="totalSkills"
-                  value={formData.stats.totalSkills}
-                  onChange={handleStatsChange}
-                  placeholder="e.g. 20+"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Social Links */}
-          <div className="form-section">
-            <h3>Connect With Me</h3>
-            <div className="form-group">
-              <label>Email</label>
+        {/* Achievements */}
+        <div className="form-section">
+          <h3>Achievements (Optional)</h3>
+          {formData.achievements.map((achievement, index) => (
+            <div key={index} className="dynamic-item">
               <input
-                type="email"
-                placeholder="your.email@example.com"
-                value={formData.socialLinks.email}
-                onChange={(e) => handleSocialLinkChange('email', e.target.value)}
+                type="text"
+                placeholder="Achievement Title"
+                value={typeof achievement === 'string' ? achievement : achievement.title}
+                onChange={(e) => handleAchievementTitleChange(index, e.target.value)}
               />
-            </div>
-            <div className="form-group phone-group">
-              <label>Phone Number</label>
-              <div className="phone-input">
-                <select
-                  value={formData.socialLinks.countryCode}
-                  onChange={(e) => handleSocialLinkChange('countryCode', e.target.value)}
-                  className="country-code-select"
-                >
-                  {countryCodes.map((country) => (
-                    <option key={country.code} value={country.code}>
-                      {country.country} ({country.code})
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  value={formData.socialLinks.phone}
-                  onChange={(e) => handleSocialLinkChange('phone', e.target.value)}
-                />
+              <div className="upload-btn-wrapper">
+                <input type="file" accept="image/*" onChange={(e) => handleAchievementImageUpload(index, e)} />
+                {(typeof achievement !== 'string' && achievement.image) && <small>✅ Image Uploaded</small>}
               </div>
+              {index > 0 && (
+                <button type="button" onClick={() => removeAchievement(index)} className="remove-btn">
+                  Remove
+                </button>
+              )}
             </div>
-            <div className="form-group">
-              <label>GitHub</label>
+          ))}
+          <button type="button" onClick={addAchievement} className="add-btn">
+            + Add More Achievement
+          </button>
+        </div>
+
+        {/* Experience */}
+        <div className="form-section">
+          <h3>Experience</h3>
+          {formData.experience.map((exp, index) => (
+            <div key={index} className="dynamic-item">
               <input
-                type="url"
-                placeholder="https://github.com/username"
-                value={formData.socialLinks.github}
-                onChange={(e) => handleSocialLinkChange('github', e.target.value)}
+                type="text"
+                placeholder="Job Title/Role"
+                value={exp.title}
+                onChange={(e) => handleExperienceChange(index, 'title', e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Company Name"
+                value={exp.company}
+                onChange={(e) => handleExperienceChange(index, 'company', e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Duration (e.g., Jan 2023 - Dec 2023)"
+                value={exp.duration}
+                onChange={(e) => handleExperienceChange(index, 'duration', e.target.value)}
+              />
+              <textarea
+                placeholder="Description"
+                value={exp.description}
+                onChange={(e) => handleExperienceChange(index, 'description', e.target.value)}
+                rows="3"
+              />
+              {index > 0 && (
+                <button type="button" onClick={() => removeExperience(index)} className="remove-btn">
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+          <button type="button" onClick={addExperience} className="add-btn">
+            + Add More Experience
+          </button>
+        </div>
+
+        {/* Portfolio Stats */}
+        <div className="form-section">
+          <h3>Portfolio Statistics</h3>
+          <div className="form-group-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+            <div className="form-group">
+              <label>Years of Experience</label>
+              <input
+                type="text"
+                name="yearsOfExperience"
+                value={formData.stats.yearsOfExperience}
+                onChange={handleStatsChange}
+                placeholder="e.g. 2+"
+                required
               />
             </div>
             <div className="form-group">
-              <label>LinkedIn</label>
+              <label>Internships Completed</label>
               <input
-                type="url"
-                placeholder="https://linkedin.com/in/username"
-                value={formData.socialLinks.linkedin}
-                onChange={(e) => handleSocialLinkChange('linkedin', e.target.value)}
+                type="text"
+                name="internshipsCompleted"
+                value={formData.stats.internshipsCompleted}
+                onChange={handleStatsChange}
+                placeholder="e.g. 5+"
+                required
               />
             </div>
             <div className="form-group">
-              <label>Instagram</label>
+              <label>Projects Completed</label>
               <input
-                type="url"
-                placeholder="https://instagram.com/username"
-                value={formData.socialLinks.instagram}
-                onChange={(e) => handleSocialLinkChange('instagram', e.target.value)}
+                type="text"
+                name="projectsCompleted"
+                value={formData.stats.projectsCompleted}
+                onChange={handleStatsChange}
+                placeholder="e.g. 10+"
+                required
               />
             </div>
-          </div>
-
-          {/* Theme Selection */}
-          <div className="form-group">
-            <label>Choose Theme *</label>
-            <select
-              name="theme"
-              value={formData.theme}
-              onChange={handleInputChange}
-            >
-              {themeOptions.map(theme => (
-                <option key={theme.value} value={theme.value}>{theme.label}</option>
-              ))}
-            </select>
-          </div>
-
-
-
-
-          {/* Success Message */}
-          {message && <div className="message">{message}</div>}
-
-          {/* Action Buttons */}
-          <div className="form-actions">
-            <button onClick={() => handleCreatePortfolio(true)} className="create-btn" disabled={loading || !formData.name}>
-              {loading ? 'Creating...' : 'Create Portfolio'}
-            </button>
+            <div className="form-group">
+              <label>Total Skills</label>
+              <input
+                type="text"
+                name="totalSkills"
+                value={formData.stats.totalSkills}
+                onChange={handleStatsChange}
+                placeholder="e.g. 20+"
+                required
+              />
+            </div>
           </div>
         </div>
+
+        {/* Social Links */}
+        <div className="form-section">
+          <h3>Connect With Me</h3>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="your.email@example.com"
+              value={formData.socialLinks.email}
+              onChange={(e) => handleSocialLinkChange('email', e.target.value)}
+            />
+          </div>
+          <div className="form-group phone-group">
+            <label>Phone Number</label>
+            <div className="phone-input">
+              <select
+                value={formData.socialLinks.countryCode}
+                onChange={(e) => handleSocialLinkChange('countryCode', e.target.value)}
+                className="country-code-select"
+              >
+                {countryCodes.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.country} ({country.code})
+                  </option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                value={formData.socialLinks.phone}
+                onChange={(e) => handleSocialLinkChange('phone', e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label>GitHub</label>
+            <input
+              type="url"
+              placeholder="https://github.com/username"
+              value={formData.socialLinks.github}
+              onChange={(e) => handleSocialLinkChange('github', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>LinkedIn</label>
+            <input
+              type="url"
+              placeholder="https://linkedin.com/in/username"
+              value={formData.socialLinks.linkedin}
+              onChange={(e) => handleSocialLinkChange('linkedin', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Instagram</label>
+            <input
+              type="url"
+              placeholder="https://instagram.com/username"
+              value={formData.socialLinks.instagram}
+              onChange={(e) => handleSocialLinkChange('instagram', e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Theme Selection */}
+        <div className="form-group">
+          <label>Choose Theme *</label>
+          <select
+            name="theme"
+            value={formData.theme}
+            onChange={handleInputChange}
+          >
+            {themeOptions.map(theme => (
+              <option key={theme.value} value={theme.value}>{theme.label}</option>
+            ))}
+          </select>
+        </div>
+
+
+
+
+        {/* Success Message */}
+        {message && <div className="message">{message}</div>}
+
+        {/* Action Buttons */}
+        <div className="form-actions">
+          <button onClick={() => handleCreatePortfolio(true)} className="create-btn" disabled={loading || !formData.name}>
+            {loading ? 'Creating...' : 'Create Portfolio'}
+          </button>
+        </div>
       </div>
-      );
+    </div>
+  );
 };
 
-      export default StudentDashboard;
+export default StudentDashboard;
