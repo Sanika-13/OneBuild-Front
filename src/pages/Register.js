@@ -31,18 +31,21 @@ const Register = () => {
 
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match!');
+            setLoading(false); // Reset loading on error
             return;
         }
 
         if (formData.password.length < 6) {
             setError('Password must be at least 6 characters long');
+            setLoading(false); // Reset loading on error
             return;
         }
 
-        setLoading(true);
-
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+            // Use environment variable or fallback to production URL
+            const API_URL = process.env.REACT_APP_API_URL || 'https://one-build-backend.vercel.app';
+
+            const response = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
