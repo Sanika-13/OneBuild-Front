@@ -637,91 +637,88 @@ const Portfolio = () => {
         {(() => {
           const token = localStorage.getItem('token');
           const storedUser = localStorage.getItem('user');
-          {/* Floating Action Buttons Container */ }
-          <div style={{
-            position: 'fixed',
-            bottom: '30px',
-            right: '30px',
-            zIndex: 1000,
-            display: 'flex',
-            gap: '15px',
-            alignItems: 'center'
-          }}>
-            {/* Share Button - Always visible */}
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Portfolio link copied! 📋');
-              }}
-              style={{
-                background: 'linear-gradient(135deg, #48dbfb 0%, #0abde3 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '50px',
-                padding: '12px 24px',
-                fontSize: '1rem',
-                fontWeight: '600',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                transition: 'transform 0.2s ease',
-              }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-              🔗 Share
-            </button>
 
-            {/* Edit Button - Only for owner */}
-            {(() => {
-              try {
-                const token = localStorage.getItem('token');
-                const storedUser = localStorage.getItem('user');
+          return (
+            <div style={{
+              position: 'fixed',
+              bottom: '30px',
+              right: '30px',
+              zIndex: 1000,
+              display: 'flex',
+              gap: '10px',
+              alignItems: 'center'
+            }}>
+              {/* Share Button - Always visible - Smaller */}
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert('Portfolio link copied! 📋');
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #48dbfb 0%, #0abde3 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '10px 18px',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'transform 0.2s ease',
+                }}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                🔗 Share
+              </button>
 
-                if (!token || !storedUser || !portfolio) return false;
+              {/* Edit Button - Only for owner */}
+              {(() => {
+                try {
+                  if (!token || !storedUser || !portfolio) return false;
 
-                const currentUser = JSON.parse(storedUser);
-                // Check if current logged-in user ID matches the portfolio's owner ID
-                // Handle both 'id' (auth response) and '_id' (mongo doc) formats
-                const currentUserId = currentUser.id || currentUser._id;
+                  const currentUser = JSON.parse(storedUser);
+                  const currentUserId = currentUser.id || currentUser._id;
 
-                if (currentUserId && String(currentUserId) === String(portfolio.userId)) {
-                  return true;
+                  if (currentUserId && String(currentUserId) === String(portfolio.userId)) {
+                    return true;
+                  }
+                } catch (e) {
+                  console.error("Error parsing user data", e);
                 }
-              } catch (e) {
-                console.error("Error parsing user data", e);
-              }
-              return false;
-            })() && (
-                <button
-                  onClick={() => navigate('/dashboard?edit=true')}
-                  style={{
-                    background: '#667eea',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '50px',
-                    padding: '12px 24px',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    transition: 'transform 0.2s ease',
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                >
-                  ✏️ Edit Portfolio
-                </button>
-              )}
-          </div>
-
-          {/* AI Chatbot */ }
-          { portfolio && <ChatBot portfolioData={portfolio} /> }
+                return false;
+              })() && (
+                  <button
+                    onClick={() => navigate('/dashboard?edit=true')}
+                    style={{
+                      background: '#667eea',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '50px',
+                      padding: '12px 24px',
+                      fontSize: '1rem',
+                      fontWeight: '600',
+                      boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      transition: 'transform 0.2s ease',
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    ✏️ Edit Portfolio
+                  </button>
+                )}
+            </div>
+          );
+        })()}
+        {/* AI Chatbot */}
+        {portfolio && <ChatBot portfolioData={portfolio} />}
       </div >
     </div >
   );
