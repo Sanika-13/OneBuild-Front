@@ -694,33 +694,7 @@ const StudentDashboard = () => {
     <div className="student-dashboard">
       <div className="dashboard-header">
         <h1>Create Your Portfolio</h1>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button
-            onClick={() => {
-              // Store current form data in localStorage for preview
-              localStorage.setItem('previewData', JSON.stringify(formData));
-              // Open preview in new tab
-              window.open('/preview', '_blank');
-            }}
-            className="preview-btn"
-            style={{
-              padding: '10px 20px',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '0.95rem',
-              fontWeight: '600',
-              transition: 'transform 0.2s'
-            }}
-            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-          >
-            👁️ Live Preview
-          </button>
-          <button onClick={handleLogout} className="logout-btn">Logout</button>
-        </div>
+        <button onClick={handleLogout} className="logout-btn">Logout</button>
       </div>
 
 
