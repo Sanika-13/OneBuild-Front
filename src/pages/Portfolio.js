@@ -641,14 +641,14 @@ const Portfolio = () => {
           return (
             <div style={{
               position: 'fixed',
-              bottom: '30px',
-              right: '30px',
+              top: '20px',
+              right: '20px',
               zIndex: 1000,
               display: 'flex',
               gap: '10px',
               alignItems: 'center'
             }}>
-              {/* Share Button - Always visible - Smaller */}
+              {/* Share Button - Icon only */}
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
@@ -658,21 +658,22 @@ const Portfolio = () => {
                   background: 'linear-gradient(135deg, #48dbfb 0%, #0abde3 100%)',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '50px',
-                  padding: '10px 18px',
-                  fontSize: '0.9rem',
-                  fontWeight: '600',
+                  borderRadius: '50%',
+                  width: '45px',
+                  height: '45px',
+                  fontSize: '1.2rem',
                   boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
+                  justifyContent: 'center',
                   transition: 'transform 0.2s ease',
                 }}
-                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                 onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                title="Share Portfolio"
               >
-                🔗 Share
+                🔗
               </button>
 
               {/* Edit Button - Only for owner */}
