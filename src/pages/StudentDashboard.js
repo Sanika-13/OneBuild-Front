@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import './StudentDashboard.css';
-import LivePreview from '../components/LivePreview';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -98,12 +97,8 @@ const StudentDashboard = () => {
   const [fileLoading, setFileLoading] = useState(false);
   // const [saveAsNew, setSaveAsNew] = useState(true); // Removed state, will force TRUE in logic
   const [showSkillsDropdown, setShowSkillsDropdown] = useState(false);
-  const [showLivePreview] = useState(true); // Always show preview
+  const [showLivePreview, setShowLivePreview] = useState(false); // Live preview toggle
 
-  // Auto-save formData to localStorage for live preview
-  useEffect(() => {
-    localStorage.setItem('previewData', JSON.stringify(formData));
-  }, [formData]);
   // Skills options
   // Generic File Upload Handler
   const handleFileUpload = async (file) => {
