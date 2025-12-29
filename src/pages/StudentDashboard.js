@@ -583,7 +583,9 @@ const StudentDashboard = () => {
           borderRadius: '12px',
           border: '2px solid #28a745',
           marginBottom: '20px',
-          boxShadow: '0 4px 12px rgba(40, 167, 69, 0.2)'
+          boxShadow: '0 4px 12px rgba(40, 167, 69, 0.2)',
+          maxWidth: '700px',
+          margin: '0 auto 20px auto'
         }}>
           <p style={{
             fontSize: '1.3rem',
