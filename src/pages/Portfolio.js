@@ -637,31 +637,24 @@ const Portfolio = () => {
         {(() => {
           const token = localStorage.getItem('token');
           const storedUser = localStorage.getItem('user');
-
-          if (!token || !storedUser || !portfolio) return false;
-
-          try {
-            const currentUser = JSON.parse(storedUser);
-            // Check if current logged-in user ID matches the portfolio's owner ID
-            // Handle both 'id' (auth response) and '_id' (mongo doc) formats
-            const currentUserId = currentUser.id || currentUser._id;
-
-            if (currentUserId && String(currentUserId) === String(portfolio.userId)) {
-              return true;
-            }
-          } catch (e) {
-            console.error("Error parsing user data", e);
-          }
-          return false;
-        })() && (
+          {/* Floating Action Buttons Container */ }
+          <div style={{
+            position: 'fixed',
+            bottom: '30px',
+            right: '30px',
+            zIndex: 1000,
+            display: 'flex',
+            gap: '15px',
+            alignItems: 'center'
+          }}>
+            {/* Share Button - Always visible */}
             <button
-              onClick={() => navigate('/dashboard?edit=true')}
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Portfolio link copied! 📋');
+              }}
               style={{
-                position: 'fixed',
-                bottom: '30px',
-                right: '30px',
-                zIndex: 1000,
-                background: '#667eea',
+                background: 'linear-gradient(135deg, #48dbfb 0%, #0abde3 100%)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '50px',
@@ -678,12 +671,57 @@ const Portfolio = () => {
               onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
               onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              ✏️ Edit Portfolio
+              🔗 Share
             </button>
-          )}
 
-        {/* AI Chatbot */}
-        {portfolio && <ChatBot portfolioData={portfolio} />}
+            {/* Edit Button - Only for owner */}
+            {(() => {
+              try {
+                const token = localStorage.getItem('token');
+                const storedUser = localStorage.getItem('user');
+
+                if (!token || !storedUser || !portfolio) return false;
+
+                const currentUser = JSON.parse(storedUser);
+                // Check if current logged-in user ID matches the portfolio's owner ID
+                // Handle both 'id' (auth response) and '_id' (mongo doc) formats
+                const currentUserId = currentUser.id || currentUser._id;
+
+                if (currentUserId && String(currentUserId) === String(portfolio.userId)) {
+                  return true;
+                }
+              } catch (e) {
+                console.error("Error parsing user data", e);
+              }
+              return false;
+            })() && (
+                <button
+                  onClick={() => navigate('/dashboard?edit=true')}
+                  style={{
+                    background: '#667eea',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '50px',
+                    padding: '12px 24px',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    transition: 'transform 0.2s ease',
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  ✏️ Edit Portfolio
+                </button>
+              )}
+          </div>
+
+          {/* AI Chatbot */ }
+          { portfolio && <ChatBot portfolioData={portfolio} /> }
       </div >
     </div >
   );
