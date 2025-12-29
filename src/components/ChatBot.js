@@ -32,8 +32,11 @@ const ChatBot = ({ portfolioData }) => {
         setIsTyping(true);
 
         try {
+            // Use environment variable or fallback to production URL
+            const API_URL = process.env.REACT_APP_API_URL || 'https://one-build-backend.vercel.app';
+
             // Call backend API
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/chat`, {
+            const response = await fetch(`${API_URL}/api/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
