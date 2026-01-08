@@ -42,8 +42,9 @@ const Register = () => {
         }
 
         try {
-            // Use environment variable or fallback to production URL
-            const API_URL = process.env.REACT_APP_API_URL || 'https://one-build-backend.vercel.app';
+            // Use environment variable or fallback based on hostname
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const API_URL = isLocal ? 'http://localhost:5000' : (process.env.REACT_APP_API_URL || 'https://one-build-backend.vercel.app');
 
             const response = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',

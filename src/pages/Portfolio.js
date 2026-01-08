@@ -37,11 +37,14 @@ const Portfolio = () => {
     }
   };
 
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_URL = isLocal ? 'http://localhost:5000' : (process.env.REACT_APP_API_URL || 'https://one-build-backend.vercel.app');
+
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/portfolio/${uniqueUrl}`
+          `${API_URL}/api/portfolio/${uniqueUrl}`
         );
         setPortfolio(response.data);
       } catch (error) {
@@ -131,6 +134,17 @@ const Portfolio = () => {
             )}
             <div className="intro-text">
               <h1 className="greeting typing-animation">
+                <img
+                  src="https://i.pinimg.com/originals/8a/a4/59/8aa4595fb24b6ed585dddac4622b2445.gif"
+                  alt="waving hand"
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    display: 'inline-block',
+                    marginRight: '10px',
+                    verticalAlign: 'middle'
+                  }}
+                />
                 Hello everyone, I am{" "}
                 <span className="name-highlight">{portfolio.name}</span>
               </h1>
@@ -204,6 +218,25 @@ const Portfolio = () => {
                   📄 Resume
                 </a>
               )}
+              {/* Profile Views Counter */}
+              <div
+                style={{
+                  marginTop: '15px',
+                  display: 'inline-block',
+                  marginLeft: portfolio.resume ? '15px' : '0',
+                  padding: '8px 16px',
+                  background: 'rgba(102, 126, 234, 0.1)',
+                  border: '1px solid rgba(102, 126, 234, 0.3)',
+                  borderRadius: '20px',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  opacity: 0,
+                  animation: 'fadeIn 0.5s ease-in forwards',
+                  animationDelay: '5.6s'
+                }}
+              >
+                👁️ Profile Views: <span style={{ color: '#667eea' }}>{portfolio.views || 0}</span>
+              </div>
               {portfolio.stats && (
                 <div className="header-stats" style={{
                   display: 'grid',

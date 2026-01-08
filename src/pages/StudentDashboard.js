@@ -8,6 +8,10 @@ const StudentDashboard = () => {
   const [searchParams] = useSearchParams();
   const isEditMode = searchParams.get('edit') === 'true';
 
+  // Use environment variable or fallback based on hostname
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_URL = isLocal ? 'http://localhost:5000' : (process.env.REACT_APP_API_URL || 'https://one-build-backend.vercel.app');
+
   useEffect(() => {
     const fetchMyPortfolio = async () => {
       const token = localStorage.getItem('token');
@@ -20,7 +24,7 @@ const StudentDashboard = () => {
       if (!isEditMode) return;
 
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/portfolio/me`, {
+        const response = await axios.get(`${API_URL}/api/portfolio/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -43,7 +47,7 @@ const StudentDashboard = () => {
             if (data.profileImage.startsWith('http') || data.profileImage.startsWith('data:')) {
               setProfileImagePreview(data.profileImage);
             } else {
-              setProfileImagePreview(`${process.env.REACT_APP_API_URL}${data.profileImage}`);
+              setProfileImagePreview(`${API_URL}${data.profileImage}`);
             }
           }
         }
@@ -105,7 +109,7 @@ const StudentDashboard = () => {
     const formDataImg = new FormData();
     formDataImg.append('image', file);
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/resume/upload-image`, formDataImg, {
+      const response = await axios.post(`${API_URL}/api/resume/upload-image`, formDataImg, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       return response.data.path;
@@ -427,7 +431,7 @@ const StudentDashboard = () => {
     formDataImg.append('image', file);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/resume/upload-image`, formDataImg, {
+      const response = await axios.post(`${API_URL}/api/resume/upload-image`, formDataImg, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -563,7 +567,7 @@ const StudentDashboard = () => {
       }
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/portfolio/create`,
+        `${API_URL}/api/portfolio/create`,
         {
           ...formData,
           isNewVersion: true // ALWAYS force new version (unique link)
@@ -669,7 +673,7 @@ const StudentDashboard = () => {
         }
       } else if (error.request) {
         // Request made but no response
-        detailedMsg = '❌ Cannot reach server - Please make sure the backend is running on ' + process.env.REACT_APP_API_URL;
+        detailedMsg = '❌ Cannot reach server - Please make sure the backend is running on ' + API_URL;
       } else if (error.message) {
         detailedMsg = `❌ ${error.message}`;
       }
