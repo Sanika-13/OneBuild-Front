@@ -23,21 +23,26 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("🚀 Submit button clicked");
 
         // Prevent multiple submissions
-        if (loading) return;
+        if (loading) {
+            console.log("⚠️ Submission blocked: Loading is true");
+            return;
+        }
 
+        setLoading(true);
         setError('');
 
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match!');
-            setLoading(false); // Reset loading on error
+            setLoading(false);
             return;
         }
 
         if (formData.password.length < 6) {
             setError('Password must be at least 6 characters long');
-            setLoading(false); // Reset loading on error
+            setLoading(false);
             return;
         }
 
@@ -45,6 +50,12 @@ const Register = () => {
             // Use environment variable or fallback based on hostname
             const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             const API_URL = isLocal ? 'http://localhost:5000' : (process.env.REACT_APP_API_URL || 'https://one-build-backend.vercel.app');
+
+            console.log(`🌍 Attempting to connect to: ${API_URL}/api/auth/register`);
+
+            // Create a timeout for the fetch
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
             const response = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',
@@ -56,7 +67,11 @@ const Register = () => {
                     email: formData.email,
                     password: formData.password
                 }),
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
+
+            console.log(`📩 Response Status: ${response.status}`);
 
             const data = await response.json();
 
