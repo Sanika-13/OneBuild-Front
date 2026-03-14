@@ -578,7 +578,8 @@ const StudentDashboard = () => {
         }
       );
 
-      const portfolioUrl = `${process.env.REACT_APP_FRONTEND_URL}/p/${response.data.portfolio.uniqueUrl}`;
+      console.log('💼 Portfolio created successfully:', response.data);
+      const portfolioUrl = `${window.location.protocol}//${window.location.host}/p/${response.data.portfolio.uniqueUrl}`;
 
       setMessage(
         <div style={{
@@ -659,22 +660,24 @@ const StudentDashboard = () => {
         detailedMsg = '❌ Network error - Please check your internet connection and make sure the backend server is running.';
       } else if (error.response) {
         // Server responded with error
+        console.error('Server Error Data:', error.response.data);
+        
+        let serverError = error.response.data?.message || error.response.data?.error || error.response.data;
+        
+        // If it's still an object, stringify it
+        if (typeof serverError === 'object') {
+          serverError = JSON.stringify(serverError);
+        }
+
         if (error.response.status === 401) {
           detailedMsg = '❌ Session expired - Please login again';
           setTimeout(() => navigate('/login'), 2000);
-        } else if (error.response.status === 400) {
-          detailedMsg = `❌ ${error.response.data?.message || error.response.data?.error || 'Invalid data provided'}`;
-        } else if (error.response.status === 500) {
-          detailedMsg = '❌ Server error - Please try again later';
-        } else if (error.response.data?.message) {
-          detailedMsg = `❌ ${error.response.data.message}`;
-        } else if (error.response.data?.error) {
-          detailedMsg = `❌ ${error.response.data.error}`;
+        } else {
+          detailedMsg = `❌ ${serverError}`;
         }
       } else if (error.request) {
-        // Request made but no response
         detailedMsg = '❌ Cannot reach server - Please make sure the backend is running on ' + API_URL;
-      } else if (error.message) {
+      } else {
         detailedMsg = `❌ ${error.message}`;
       }
 
